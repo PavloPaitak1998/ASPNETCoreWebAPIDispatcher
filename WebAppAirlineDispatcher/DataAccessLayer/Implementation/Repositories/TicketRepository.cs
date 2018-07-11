@@ -2,6 +2,7 @@
 using DataAccessLayer.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DataAccessLayer.Implementation.Repositories
@@ -14,40 +15,49 @@ namespace DataAccessLayer.Implementation.Repositories
         {
             dataSource = data;
         }
-
-        public void Create(Ticket entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Ticket> Find(Func<Ticket, bool> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
         public Ticket Get(int id)
         {
-            throw new NotImplementedException();
+            return dataSource.TicketList.Find(t => t.Id == id);
         }
 
         public IEnumerable<Ticket> GetAll()
         {
-            throw new NotImplementedException();
+            return dataSource.TicketList;
+        }
+
+        public void Create(Ticket entity)
+        {
+            dataSource.TicketList.Add(entity);
+        }
+
+        public IEnumerable<Ticket> Find(Func<Ticket, bool> predicate)
+        {
+            return dataSource.TicketList.Where(predicate);
         }
 
         public void Update(Ticket entity)
         {
-            throw new NotImplementedException();
+            var ticket = dataSource.TicketList.Find(t => t.Id == entity.Id);
+
+            if (entity.FlightNumber != 0)
+                ticket.FlightNumber = entity.FlightNumber;
+            if (entity.Price != 0.0)
+                ticket.Price = entity.Price;
+
+        }
+
+        public void Delete(int id)
+        {
+            var tickets = dataSource.TicketList;
+
+            tickets.Remove(tickets.Find(t => t.Id == id));
+        }
+
+        public void DeleteAll()
+        {
+            var tickets = dataSource.TicketList;
+
+            tickets.RemoveRange(0, tickets.Count());
         }
     }
 }
