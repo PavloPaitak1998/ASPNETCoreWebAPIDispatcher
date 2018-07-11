@@ -39,13 +39,13 @@ namespace DataAccessLayer.Implementation.Repositories
         {
             var flight = dataSource.FlightList.Find(f => f.Number == entity.Number);
 
-            if (entity.DepartureTime != null)
+            if (entity.DepartureTime != DateTime.MinValue)
                 flight.DepartureTime = entity.DepartureTime;
             if (entity.PointOfDeparture != null)
                 flight.PointOfDeparture = entity.PointOfDeparture;
             if (entity.Destination != null)
                 flight.Destination = entity.Destination;
-            if (entity.DestinationTime != null)
+            if (entity.DestinationTime != DateTime.MinValue)
                 flight.DestinationTime = entity.DestinationTime;
             if (entity.TicketsId != null)
                 flight.TicketsId = entity.TicketsId;

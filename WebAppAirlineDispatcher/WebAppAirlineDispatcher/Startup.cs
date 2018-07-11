@@ -29,7 +29,7 @@ namespace WebAppAirlineDispatcher
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddSingleton<IFlightService, FlightService>();
+            services.AddTransient<IFlightService, FlightService>();
             services.AddSingleton<IDataSource, DataSource>();
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
         }

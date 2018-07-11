@@ -5,6 +5,6 @@ namespace DataAccessLayer.Models
     {
         public int Id { get; set; }
         public double Price { get; set; }
-        public int FlightNumber { get; set; }
+        public int? FlightNumber { get; set; }
     }
 }

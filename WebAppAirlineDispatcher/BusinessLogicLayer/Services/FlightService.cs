@@ -3,8 +3,9 @@ using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Interfaces;
 using DataAccessLayer.Models;
 using Shared.DTO;
+using Shared.Exceptions;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace BusinessLogicLayer.Services
 {
@@ -17,15 +18,12 @@ namespace BusinessLogicLayer.Services
             unitOfWork = uow;
         }
 
-        public FlightDTO GetFlight(int? id)
+        public FlightDTO GetFlight(int id)
         {
-            if (id == null)
-                throw new ValidationException("Not set flight number ");
-
-            var flight = unitOfWork.Flights.Get(id.Value);
+            var flight = unitOfWork.Flights.Get(id);
 
             if (flight == null)
-                throw new ValidationException($"Flight with this number {id.Value} not found");
+                throw new ValidationException($"Flight with this number {id} not found");
 
             return new FlightDTO
             {
@@ -48,6 +46,18 @@ namespace BusinessLogicLayer.Services
 
         public void CreateFlight(FlightDTO flightDTO)
         {
+            if (flightDTO==null || flightDTO.Destination==null || flightDTO.PointOfDeparture==null ||
+                flightDTO.DestinationTime==DateTime.MinValue || flightDTO.DepartureTime== DateTime.MinValue ||
+                flightDTO.TicketsId==null)
+            {
+                throw new ValidationException($"All fields must be filled");
+            }
+
+            if (unitOfWork.Flights.Get(flightDTO.Number)!=null)
+            {
+                throw new ValidationException($"Flight with this number {flightDTO.Number} already exist");
+            }
+
             List<Ticket> tickets = new List<Ticket>();
 
             int count = 0;
@@ -55,7 +65,7 @@ namespace BusinessLogicLayer.Services
             {
                 tickets.Add(unitOfWork.Tickets.Get(ticketId));
                 if (tickets[count] == null)
-                    throw new ValidationException($"Ticket with this id{ticketId} not found");
+                    throw new ValidationException($"Ticket with this id {ticketId} not found");
                 count++;
             }
 
@@ -72,15 +82,16 @@ namespace BusinessLogicLayer.Services
             unitOfWork.Flights.Create(flight);
         }
 
-        public void UpdateFlight(FlightDTO flightDTO)
+        public void UpdateFlight(int number, FlightDTO flightDTO)
         {
-            var flight = unitOfWork.Flights.Get(flightDTO.Number);
+            var flight = unitOfWork.Flights.Get(number);
 
             if (flight == null)
                 throw new ValidationException($"Flight with this number {flightDTO.Number} not found");
 
             unitOfWork.Flights.Update(new Flight
             {
+                Number=number,
                 PointOfDeparture = flightDTO.PointOfDeparture,
                 DepartureTime = flightDTO.DepartureTime,
                 Destination = flightDTO.Destination,
@@ -94,17 +105,14 @@ namespace BusinessLogicLayer.Services
             unitOfWork.Flights.DeleteAll();
         }
 
-        public void DeleteFlight(int? id)
+        public void DeleteFlight(int id)
         {
-            if(id==null)
-                throw new ValidationException("Not set flight id ");
-
-            var flight = unitOfWork.Flights.Get(id.Value);
+            var flight = unitOfWork.Flights.Get(id);
 
             if (flight == null)
-                throw new ValidationException($"Flight with this id {id.Value} not found");
+                throw new ValidationException($"Flight with this number {id} not found");
 
-            unitOfWork.Flights.Delete(id.Value);
+            unitOfWork.Flights.Delete(id);
         }
     }
 }

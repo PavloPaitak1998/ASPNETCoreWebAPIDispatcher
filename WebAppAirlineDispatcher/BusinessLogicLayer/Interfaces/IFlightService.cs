@@ -5,11 +5,11 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface IFlightService
     {
-        FlightDTO GetFlight(int? id);
+        FlightDTO GetFlight(int id);
         IEnumerable<FlightDTO> GetFlights();
         void CreateFlight(FlightDTO flightDTO);
-        void UpdateFlight(FlightDTO flightDTO);
-        void DeleteFlight(int? id);
+        void UpdateFlight(int number, FlightDTO flightDTO);
+        void DeleteFlight(int id);
         void DeleteAllFlights();
     }
 }

@@ -5,6 +5,7 @@ using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTO;
+using Shared.Exceptions;
 
 namespace WebAppAirlineDispatcher.Controllers
 {
@@ -27,21 +28,33 @@ namespace WebAppAirlineDispatcher.Controllers
 
         // GET api/flights/5
         [HttpGet("{id}")]
-        public FlightDTO Details(int id)
+        public IActionResult Get(int id)
         {
-            return flightService.GetFlight(id);
+            try
+            {
+                var flight = flightService.GetFlight(id);
+                return Ok(flight);
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }        
         }
 
         // POST api/flights
         [HttpPost]
         public IActionResult Post([FromBody]FlightDTO flight)
         {
-            if (flight == null)
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            try
             {
-                return BadRequest();
+                flightService.CreateFlight(flight);
             }
-
-            flightService.CreateFlight(flight);
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
 
             return Ok(flight);
         }
@@ -50,26 +63,35 @@ namespace WebAppAirlineDispatcher.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]FlightDTO flight)
         {
-            if (flight == null)
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
             {
-                return BadRequest();
+                flightService.UpdateFlight(id,flight);            
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(new { ValidationException = e.Message });
             }
 
-            var flightEntity = flightService.GetFlight(id);
-
-            flightEntity = flight;
-
+            flight.Number = id;
             return Ok(flight);
-
         }
 
         // DELETE api/flights/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            flightService.DeleteFlight(id);
-
-            return Ok(new {Id=id,Deleted=true });
+            try
+            {
+                flightService.DeleteFlight(id);
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(new { ValidationException = e.Message });
+            }
+            return NoContent();
         }
 
         // DELETE api/flights
@@ -77,8 +99,7 @@ namespace WebAppAirlineDispatcher.Controllers
         public IActionResult Delete()
         {
             flightService.DeleteAllFlights();
-
-            return Ok();
+            return NoContent();
         }
 
     }

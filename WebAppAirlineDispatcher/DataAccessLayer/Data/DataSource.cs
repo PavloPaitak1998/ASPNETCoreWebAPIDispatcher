@@ -60,7 +60,10 @@ namespace DataAccessLayer.Data
                 new Ticket{Id=17,Price=200,FlightNumber=6666},
                 new Ticket{Id=18,Price=200,FlightNumber=8888},
                 new Ticket{Id=19,Price=200,FlightNumber=1010},
-                new Ticket{Id=20,Price=200,FlightNumber=2222}
+                new Ticket{Id=20,Price=200,FlightNumber=2222},
+                new Ticket{Id=21,Price=210},
+                new Ticket{Id=22,Price=200}
+
 
             };
 
@@ -152,16 +155,16 @@ namespace DataAccessLayer.Data
         {
             var planesList = new List<Plane>
             {
-                new Plane{Id=1,Name="T-145",TypeId=1,ReleaseDate=DateTime.Parse("12.07.2000"),Lifetime=new TimeSpan()},
-                new Plane{Id=2,Name="AN-15",TypeId=2,ReleaseDate=DateTime.Parse("12.07.2001"),Lifetime=new TimeSpan()},
-                new Plane{Id=3,Name="LY-287",TypeId=3,ReleaseDate=DateTime.Parse("12.07.2002"),Lifetime=new TimeSpan()},
-                new Plane{Id=4,Name="TU-159",TypeId=4,ReleaseDate=DateTime.Parse("12.07.2003"),Lifetime=new TimeSpan()},
-                new Plane{Id=5,Name="CL-11",TypeId=5,ReleaseDate=DateTime.Parse("12.07.2004"),Lifetime=new TimeSpan()},
-                new Plane{Id=6,Name="BOING-789",TypeId=1,ReleaseDate=DateTime.Parse("12.07.2005"),Lifetime=new TimeSpan()},
-                new Plane{Id=7,Name="AN-14",TypeId=2,ReleaseDate=DateTime.Parse("12.07.2006"),Lifetime=new TimeSpan()},
-                new Plane{Id=8,Name="T-145",TypeId=3,ReleaseDate=DateTime.Parse("12.07.2007"),Lifetime=new TimeSpan()},
-                new Plane{Id=9,Name="TU-185",TypeId=4,ReleaseDate=DateTime.Parse("12.07.2008"),Lifetime=new TimeSpan()},
-                new Plane{Id=10,Name="M-168",TypeId=5,ReleaseDate=DateTime.Parse("12.07.2009"),Lifetime=new TimeSpan()},
+                new Plane{Id=1,Name="T-145",TypeId=1,ReleaseDate=DateTime.Parse("12.07.2000"),Lifetime=new DateTime(2020,07,12)-DateTime.Parse("12.07.2000")},
+                new Plane{Id=2,Name="AN-15",TypeId=2,ReleaseDate=DateTime.Parse("12.07.2001"),Lifetime=new DateTime(2020,07,12)-DateTime.Parse("12.07.2001")},
+                new Plane{Id=3,Name="LY-287",TypeId=3,ReleaseDate=DateTime.Parse("12.07.2002"),Lifetime=new DateTime(2020,07,12)-DateTime.Parse("12.07.2002")},
+                new Plane{Id=4,Name="TU-159",TypeId=4,ReleaseDate=DateTime.Parse("12.07.2003"),Lifetime=new DateTime(2020,07,12)-DateTime.Parse("12.07.2003")},
+                new Plane{Id=5,Name="CL-11",TypeId=5,ReleaseDate=DateTime.Parse("12.07.2004"),Lifetime=new DateTime(2020,07,12)-DateTime.Parse("12.07.2004")},
+                new Plane{Id=6,Name="BOING-789",TypeId=1,ReleaseDate=DateTime.Parse("12.07.2005"),Lifetime=new DateTime(2020,07,12)-DateTime.Parse("12.07.2005")},
+                new Plane{Id=7,Name="AN-14",TypeId=2,ReleaseDate=DateTime.Parse("12.07.2006"),Lifetime=new DateTime(2020,07,12)-DateTime.Parse("12.07.2006")},
+                new Plane{Id=8,Name="T-145",TypeId=3,ReleaseDate=DateTime.Parse("12.07.2007"),Lifetime=new DateTime(2020,07,12)-DateTime.Parse("12.07.2007")},
+                new Plane{Id=9,Name="TU-185",TypeId=4,ReleaseDate=DateTime.Parse("12.07.2008"),Lifetime=new DateTime(2020,07,12)-DateTime.Parse("12.07.2008")},
+                new Plane{Id=10,Name="M-168",TypeId=5,ReleaseDate=DateTime.Parse("12.07.2009"),Lifetime=new DateTime(2020,07,12)-DateTime.Parse("12.07.2009")},
             };
 
             return planesList;
