@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DataAccessLayer.Data
 {
-    class DataSource : IDataSource
+    public class DataSource : IDataSource
     {
         public List<Flight> FlightList { get; set; } = GetFlights();
         public List<Ticket> TicketList { get; set; } = GetTickets();

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Implementation.UnitOfWork
 {
-    class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         readonly IDataSource dataSource;
 
