@@ -4,7 +4,6 @@ using DataAccessLayer.Interfaces;
 using DataAccessLayer.Models;
 using Shared.DTO;
 using Shared.Exceptions;
-using System;
 using System.Collections.Generic;
 
 namespace BusinessLogicLayer.Services
@@ -46,13 +45,6 @@ namespace BusinessLogicLayer.Services
 
         public void CreateFlight(FlightDTO flightDTO)
         {
-            if (flightDTO==null || flightDTO.Destination==null || flightDTO.PointOfDeparture==null ||
-                flightDTO.DestinationTime==DateTime.MinValue || flightDTO.DepartureTime== DateTime.MinValue ||
-                flightDTO.TicketsId==null)
-            {
-                throw new ValidationException($"All fields must be filled");
-            }
-
             if (unitOfWork.Flights.Get(flightDTO.Number)!=null)
             {
                 throw new ValidationException($"Flight with this number {flightDTO.Number} already exist");
@@ -87,7 +79,7 @@ namespace BusinessLogicLayer.Services
             var flight = unitOfWork.Flights.Get(number);
 
             if (flight == null)
-                throw new ValidationException($"Flight with this number {flightDTO.Number} not found");
+                throw new ValidationException($"Flight with this number {number} not found");
 
             unitOfWork.Flights.Update(new Flight
             {
