@@ -80,6 +80,27 @@ namespace BusinessLogicLayer.Services
             if (departure == null)
                 throw new ValidationException($"Departure with this id {departureDTO.Id} not found");
 
+            if (departureDTO.CrewId>0)
+            {
+                var crew = unitOfWork.Crew.Get(departureDTO.CrewId);
+                if (crew == null)
+                    throw new ValidationException($"Crew with this id {departureDTO.CrewId} not found");
+            }
+
+            if (departureDTO.FlightNumber>0)
+            {
+                var flight = unitOfWork.Flights.Get(departureDTO.FlightNumber);
+                if (flight == null)
+                    throw new ValidationException($"Flight with this number {departureDTO.FlightNumber} not found");
+            }
+
+            if (departureDTO.PlaneId>0)
+            {
+                var plane = unitOfWork.Planes.Get(departureDTO.PlaneId);
+                if (plane == null)
+                    throw new ValidationException($"Plane with this id {departureDTO.PlaneId} not found");
+            }
+
             unitOfWork.Departures.Update(new Departure
             {
                 Id = departureDTO.Id,

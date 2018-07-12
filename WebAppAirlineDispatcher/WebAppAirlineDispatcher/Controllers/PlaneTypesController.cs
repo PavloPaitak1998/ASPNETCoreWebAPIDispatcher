@@ -77,7 +77,7 @@ namespace WebAppAirlineDispatcher.Controllers
                 return BadRequest(new { Exception = e.Message });
             }
 
-            return Ok(planeTypeItem);
+            return Ok(planeTypeService.GetPlaneType(id));
         }
 
         // DELETE api/planetypes/5

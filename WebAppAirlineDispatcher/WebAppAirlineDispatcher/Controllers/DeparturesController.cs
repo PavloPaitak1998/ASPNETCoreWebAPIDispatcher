@@ -81,7 +81,7 @@ namespace WebAppAirlineDispatcher.Controllers
                 return BadRequest(new { Exception = e.Message });
             }
 
-            return Ok(departureItem);
+            return Ok(departureService.GetDeparture(id));
         }
 
         // DELETE api/departures/5

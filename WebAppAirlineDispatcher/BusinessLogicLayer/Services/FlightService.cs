@@ -79,6 +79,21 @@ namespace BusinessLogicLayer.Services
             if (flight == null)
                 throw new ValidationException($"Flight with this number {flightDTO.Number} not found");
 
+            if(flightDTO.TicketsId.Length>0)
+            {
+                List<Ticket> tickets = new List<Ticket>();
+
+                int count = 0;
+                foreach (var ticketId in flightDTO.TicketsId)
+                {
+                    tickets.Add(unitOfWork.Tickets.Get(ticketId));
+                    if (tickets[count] == null)
+                        throw new ValidationException($"Ticket with this id {ticketId} not found");
+                    count++;
+                }
+
+            }
+
             unitOfWork.Flights.Update(new Flight
             {
                 Number= flightDTO.Number,

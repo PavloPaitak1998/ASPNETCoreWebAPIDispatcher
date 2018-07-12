@@ -77,6 +77,27 @@ namespace BusinessLogicLayer.Services
             if (crew == null)
                 throw new ValidationException($"Crew with this id {crewDTO.Id} not found");
 
+            if(crewDTO.StewardessesId.Length>0)
+            {
+                List<Stewardess> stewardesses = new List<Stewardess>();
+
+                int count = 0;
+                foreach (var sid in crewDTO.StewardessesId)
+                {
+                    stewardesses.Add(unitOfWork.Stewardesses.Get(sid));
+                    if (stewardesses[count] == null)
+                        throw new ValidationException($"Stewardesses with this id {sid} not found");
+                    count++;
+                }
+            }
+
+            if (crewDTO.PilotId!=0)
+            {
+                var pilot = unitOfWork.Pilots.Get(crewDTO.PilotId);
+                if (pilot == null)
+                    throw new ValidationException($"Pilot with this id {crewDTO.PilotId} not found");
+            }
+
             unitOfWork.Crew.Update(new Crew
             {
                 Id = crewDTO.Id,

@@ -69,6 +69,13 @@ namespace BusinessLogicLayer.Services
             if (plane == null)
                 throw new ValidationException($"Plane with this id {planeDTO.Id} not found");
 
+            if (planeDTO.TypeId>0)
+            {
+                var planeType = unitOfWork.PlaneTypes.Get(planeDTO.TypeId);
+                if (planeType == null)
+                    throw new ValidationException($"PlaneType with this id {planeDTO.TypeId} not found");
+            }
+
             unitOfWork.Planes.Update(new Plane
             {
                 Id = planeDTO.Id,

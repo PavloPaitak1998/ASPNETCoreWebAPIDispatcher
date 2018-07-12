@@ -43,9 +43,14 @@ namespace BusinessLogicLayer.Services
 
         public void CreateTicket(TicketDTO ticketDTO)
         {
-            if (unitOfWork.Flights.Get(ticketDTO.Id) != null)
-            {
+            if (unitOfWork.Tickets.Get(ticketDTO.Id) != null)
                 throw new ValidationException($"Ticket with this id {ticketDTO.Id} already exist");
+
+            if(ticketDTO.FlightNumber!=null)
+            {
+                var flight = unitOfWork.Flights.Get(ticketDTO.FlightNumber.Value);
+                if(flight==null)
+                    throw new ValidationException($"Flight number {ticketDTO.FlightNumber.Value} not exist");
             }
 
             Ticket ticket = new Ticket
@@ -65,6 +70,14 @@ namespace BusinessLogicLayer.Services
 
             if (ticket == null)
                 throw new ValidationException($"Ticket with this id {ticketDTO.Id} not found");
+
+            if (ticketDTO.FlightNumber != null)
+            {
+                var flight = unitOfWork.Flights.Get(ticketDTO.FlightNumber.Value);
+                if (flight == null)
+                    throw new ValidationException($"Flight number {ticketDTO.FlightNumber.Value} not exist");
+            }
+
 
             unitOfWork.Tickets.Update(new Ticket
             {

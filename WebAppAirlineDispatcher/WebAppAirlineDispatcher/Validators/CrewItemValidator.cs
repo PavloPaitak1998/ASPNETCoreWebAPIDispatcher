@@ -7,9 +7,9 @@ namespace WebAppAirlineDispatcher.Validators
     {
         public CrewItemValidator()
         {
-            RuleFor(c => c.Id).NotEmpty().WithMessage("Crew id can't be empty !");
-            RuleFor(c => c.PilotId).NotEmpty().WithMessage("Pilot id can't be empty !");
-            RuleFor(c => c.StewardessesId).NotNull().WithMessage("Stewardesses Id  can't be null !");
+            RuleFor(c => c.Id).NotEmpty().WithMessage("Crew id can't be empty !").GreaterThan(0);
+            RuleFor(c => c.PilotId).NotEmpty().WithMessage("Pilot id can't be empty !").GreaterThan(0);
+            RuleFor(c => c.StewardessesId).NotEmpty().WithMessage("Stewardesses Id  can't be empty !");
         }
     }
 }
