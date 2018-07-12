@@ -6,6 +6,7 @@ using Shared.DTO;
 using Shared.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BusinessLogicLayer.Services
@@ -91,6 +92,11 @@ namespace BusinessLogicLayer.Services
         public void DeleteAllTickets()
         {
             unitOfWork.Tickets.DeleteAll();
+            foreach (var flight in unitOfWork.Flights.GetAll())
+            {
+                flight.TicketsId=new List<int>();
+            }
+
         }
 
         public void DeleteTicket(int id)
@@ -101,6 +107,11 @@ namespace BusinessLogicLayer.Services
                 throw new ValidationException($"Ticket with this id {id} not found");
 
             unitOfWork.Tickets.Delete(id);
+
+            foreach (var flight in unitOfWork.Flights.Find(f => f.TicketsId.Exists(t => t == id)))
+            {
+                flight.TicketsId.Remove(id);
+            }
         }
     }
 }

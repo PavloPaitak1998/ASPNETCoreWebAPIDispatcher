@@ -5,6 +5,7 @@ using DataAccessLayer.Models;
 using Shared.DTO;
 using Shared.Exceptions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BusinessLogicLayer.Services
 {
@@ -79,7 +80,7 @@ namespace BusinessLogicLayer.Services
             if (flight == null)
                 throw new ValidationException($"Flight with this number {flightDTO.Number} not found");
 
-            if(flightDTO.TicketsId.Length>0)
+            if(flightDTO.TicketsId.Count()>0)
             {
                 List<Ticket> tickets = new List<Ticket>();
 
@@ -108,6 +109,17 @@ namespace BusinessLogicLayer.Services
         public void DeleteAllFlights()
         {
             unitOfWork.Flights.DeleteAll();
+
+            foreach (var departure in unitOfWork.Departures.GetAll())
+            {
+                departure.FlightNumber = 0;
+            }
+            foreach (var ticket in unitOfWork.Tickets.GetAll())
+            {
+                ticket.FlightNumber = 0;
+            }
+
+
         }
 
         public void DeleteFlight(int id)
@@ -118,6 +130,15 @@ namespace BusinessLogicLayer.Services
                 throw new ValidationException($"Flight with this number {id} not found");
 
             unitOfWork.Flights.Delete(id);
+
+            foreach (var departure in unitOfWork.Departures.Find(d => d.FlightNumber == id))
+            {
+                departure.FlightNumber = 0;
+            }
+            foreach (var ticket in unitOfWork.Tickets.Find(t => t.FlightNumber == id))
+            {
+                ticket.FlightNumber = 0;
+            }
         }
     }
 }

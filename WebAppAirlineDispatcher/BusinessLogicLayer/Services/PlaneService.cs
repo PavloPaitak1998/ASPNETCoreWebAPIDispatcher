@@ -89,6 +89,12 @@ namespace BusinessLogicLayer.Services
         public void DeleteAllPlanes()
         {
             unitOfWork.Planes.DeleteAll();
+
+            foreach (var departure in unitOfWork.Departures.GetAll())
+            {
+                departure.PlaneId = 0;
+            }
+
         }
 
         public void DeletePlane(int id)
@@ -99,6 +105,11 @@ namespace BusinessLogicLayer.Services
                 throw new ValidationException($"Plane with this id {id} not found");
 
             unitOfWork.Planes.Delete(id);
+
+            foreach (var departure in unitOfWork.Departures.Find(d => d.PlaneId == id))
+            {
+                departure.PlaneId = 0;
+            }
         }
     }
 }

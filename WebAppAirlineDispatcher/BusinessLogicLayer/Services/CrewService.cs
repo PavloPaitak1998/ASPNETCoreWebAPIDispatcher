@@ -5,13 +5,13 @@ using DataAccessLayer.Models;
 using Shared.DTO;
 using Shared.Exceptions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BusinessLogicLayer.Services
 {
     public class CrewService : ICrewService
     {
         IUnitOfWork unitOfWork;
-        private object flightDTO;
 
         public CrewService(IUnitOfWork uow)
         {
@@ -77,7 +77,7 @@ namespace BusinessLogicLayer.Services
             if (crew == null)
                 throw new ValidationException($"Crew with this id {crewDTO.Id} not found");
 
-            if(crewDTO.StewardessesId.Length>0)
+            if(crewDTO.StewardessesId.Count()>0)
             {
                 List<Stewardess> stewardesses = new List<Stewardess>();
 

@@ -47,7 +47,7 @@ namespace DataAccessLayer.Implementation.Repositories
                 flight.Destination = entity.Destination;
             if (entity.DestinationTime != DateTime.MinValue)
                 flight.DestinationTime = entity.DestinationTime;
-            if (entity.TicketsId != null && entity.TicketsId.Length>0)
+            if (entity.TicketsId != null && entity.TicketsId.Count()>0)
                 flight.TicketsId = entity.TicketsId;
         }
 

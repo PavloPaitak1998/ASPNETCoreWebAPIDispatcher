@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DataAccessLayer.Models
 {
@@ -9,6 +10,6 @@ namespace DataAccessLayer.Models
         public DateTime DepartureTime { get; set; }
         public string Destination { get; set; }
         public DateTime DestinationTime { get; set; }
-        public int[] TicketsId { get; set; }
+        public List<int> TicketsId { get; set; }
     }
 }

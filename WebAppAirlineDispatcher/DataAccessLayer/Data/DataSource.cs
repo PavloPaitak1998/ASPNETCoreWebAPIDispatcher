@@ -22,16 +22,16 @@ namespace DataAccessLayer.Data
         static List<Flight> GetFlights()
         {
             var flightsList = new List<Flight> {
-                new Flight{Number=1111,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,10,18,23,0),Destination="London",DestinationTime=new DateTime(2018,07,11,18,23,0),TicketsId=new int[]{ 1,11} },
-                new Flight{Number=2222,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,11,18,23,0),Destination="Tokio",DestinationTime=new DateTime(2018,07,12,18,0,0),TicketsId=new int[]{ 10,20}},
-                new Flight{Number=3333,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,12,18,23,0),Destination="Moskow",DestinationTime=new DateTime(2018,07,13,18,23,0),TicketsId=new int[]{ 2,12}},
-                new Flight{Number=4444,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,13,18,23,0),Destination="Paris",DestinationTime=new DateTime(2018,07,14,18,23,0),TicketsId=new int[]{ 3,13}},
-                new Flight{Number=5555,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,14,18,23,0),Destination="Kiyv",DestinationTime=new DateTime(2018,07,15,18,23,0),TicketsId=new int[]{ 6,16}},
-                new Flight{Number=6666,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,15,18,23,0),Destination="Pekin",DestinationTime=new DateTime(2018,07,16,10,23,0),TicketsId=new int[]{ 7,17}},
-                new Flight{Number=7777,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,11,18,23,0),Destination="Hong Kong",DestinationTime=new DateTime(2018,07,11,23,49,0),TicketsId=new int[]{ 4,14}},
-                new Flight{Number=8888,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,12,18,23,0),Destination="Tbilisi",DestinationTime=new DateTime(2018,07,13,18,23,0),TicketsId=new int[]{ 8,18}},
-                new Flight{Number=9999,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,13,8,23,0),Destination="Batumi",DestinationTime=new DateTime(2018,07,13,18,23,0),TicketsId=new int[]{ 5,15}},
-                new Flight{Number=1010,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,14,18,23,0),Destination="Varshava",DestinationTime=new DateTime(2018,07,14,22,23,0),TicketsId=new int[]{ 9,19}}
+                new Flight{Number=1111,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,10,18,23,0),Destination="London",DestinationTime=new DateTime(2018,07,11,18,23,0),TicketsId=new List<int>{ 1,11} },
+                new Flight{Number=2222,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,11,18,23,0),Destination="Tokio",DestinationTime=new DateTime(2018,07,12,18,0,0),TicketsId=new List<int>{ 10,20}},
+                new Flight{Number=3333,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,12,18,23,0),Destination="Moskow",DestinationTime=new DateTime(2018,07,13,18,23,0),TicketsId=new List<int>{ 2,12}},
+                new Flight{Number=4444,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,13,18,23,0),Destination="Paris",DestinationTime=new DateTime(2018,07,14,18,23,0),TicketsId=new List<int>{ 3,13}},
+                new Flight{Number=5555,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,14,18,23,0),Destination="Kiyv",DestinationTime=new DateTime(2018,07,15,18,23,0),TicketsId=new List<int>{ 6,16}},
+                new Flight{Number=6666,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,15,18,23,0),Destination="Pekin",DestinationTime=new DateTime(2018,07,16,10,23,0),TicketsId=new List<int>{ 7,17}},
+                new Flight{Number=7777,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,11,18,23,0),Destination="Hong Kong",DestinationTime=new DateTime(2018,07,11,23,49,0),TicketsId=new List<int>{ 4,14}},
+                new Flight{Number=8888,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,12,18,23,0),Destination="Tbilisi",DestinationTime=new DateTime(2018,07,13,18,23,0),TicketsId=new List<int>{ 8,18}},
+                new Flight{Number=9999,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,13,8,23,0),Destination="Batumi",DestinationTime=new DateTime(2018,07,13,18,23,0),TicketsId=new List<int>{ 5,15}},
+                new Flight{Number=1010,PointOfDeparture="Lviv",DepartureTime=new DateTime(2018,07,14,18,23,0),Destination="Varshava",DestinationTime=new DateTime(2018,07,14,22,23,0),TicketsId=new List<int>{ 9,19}}
             };
 
             return flightsList;
@@ -135,16 +135,16 @@ namespace DataAccessLayer.Data
         {
             var crewList = new List<Crew>
             {
-                new Crew{Id=1,PilotId=1,StewardessesId=new int[]{1,2,3,4}},
-                new Crew{Id=2,PilotId=2,StewardessesId=new int[]{5,6,7,8}},
-                new Crew{Id=3,PilotId=3,StewardessesId=new int[]{9,10}},
-                new Crew{Id=4,PilotId=4,StewardessesId=new int[]{1,2,3}},
-                new Crew{Id=5,PilotId=5,StewardessesId=new int[]{4,5,6}},
-                new Crew{Id=6,PilotId=6,StewardessesId=new int[]{7,8,9}},
-                new Crew{Id=7,PilotId=7,StewardessesId=new int[]{10,1,2,3,4,5}},
-                new Crew{Id=8,PilotId=8,StewardessesId=new int[]{6,7,8,9,10}},
-                new Crew{Id=9,PilotId=9,StewardessesId=new int[]{1,2,3,4}},
-                new Crew{Id=10,PilotId=10,StewardessesId=new int[]{5,6,7,8,9,10}}
+                new Crew{Id=1,PilotId=1,StewardessesId=new List<int>{1,2,3,4}},
+                new Crew{Id=2,PilotId=2,StewardessesId=new List<int>{5,6,7,8}},
+                new Crew{Id=3,PilotId=3,StewardessesId=new List<int>{9,10}},
+                new Crew{Id=4,PilotId=4,StewardessesId=new List<int>{1,2,3}},
+                new Crew{Id=5,PilotId=5,StewardessesId=new List<int>{4,5,6}},
+                new Crew{Id=6,PilotId=6,StewardessesId=new List<int>{7,8,9}},
+                new Crew{Id=7,PilotId=7,StewardessesId=new List<int>{10,1,2,3,4,5}},
+                new Crew{Id=8,PilotId=8,StewardessesId=new List<int>{6,7,8,9,10}},
+                new Crew{Id=9,PilotId=9,StewardessesId=new List<int>{1,2,3,4}},
+                new Crew{Id=10,PilotId=10,StewardessesId=new List<int>{5,6,7,8,9,10}}
 
             };
 

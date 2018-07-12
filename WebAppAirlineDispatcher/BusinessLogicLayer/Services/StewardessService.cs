@@ -78,6 +78,12 @@ namespace BusinessLogicLayer.Services
         public void DeleteAllStewardesses()
         {
             unitOfWork.Stewardesses.DeleteAll();
+
+            foreach (var crew in unitOfWork.Crew.GetAll())
+            {
+                crew.StewardessesId=new List<int>();
+            }
+
         }
 
         public void DeleteStewardess(int id)
@@ -88,6 +94,11 @@ namespace BusinessLogicLayer.Services
                 throw new ValidationException($"Stewardess with this id {id} not found");
 
             unitOfWork.Stewardesses.Delete(id);
+
+            foreach (var crew in unitOfWork.Crew.Find(c => c.StewardessesId.Exists(s => s == id)))
+            {
+                crew.StewardessesId.Remove(id);
+            }
         }
     }
 }

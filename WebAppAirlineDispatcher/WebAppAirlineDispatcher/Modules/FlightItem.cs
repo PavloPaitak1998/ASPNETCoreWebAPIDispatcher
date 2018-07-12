@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace WebAppAirlineDispatcher.Modules
 {
@@ -9,7 +10,7 @@ namespace WebAppAirlineDispatcher.Modules
         public DateTime DepartureTime { get; set; }
         public string Destination { get; set; }
         public DateTime DestinationTime { get; set; }
-        public int[] TicketsId { get; set; }
+        public List<int> TicketsId { get; set; }
 
     }
 }

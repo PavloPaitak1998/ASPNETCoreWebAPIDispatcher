@@ -16,38 +16,6 @@ namespace BusinessLogicLayer.Services
         {
             unitOfWork = uow;
         }
-
-        public void CreatePlaneType(PlaneTypeDTO planeTypeDTO)
-        {
-            if (unitOfWork.PlaneTypes.Get(planeTypeDTO.Id) != null)
-                throw new ValidationException($"Plane Type with this id {planeTypeDTO.Id} already exist");
-
-            PlaneType planeType = new PlaneType
-            {
-                Id=planeTypeDTO.Id,
-                Model=planeTypeDTO.Model,
-                Seats= planeTypeDTO.Seats,
-                Carrying= planeTypeDTO.Carrying
-            };
-
-            unitOfWork.PlaneTypes.Create(planeType);
-        }
-
-        public void DeleteAllPlaneTypes()
-        {
-            unitOfWork.PlaneTypes.DeleteAll();
-        }
-
-        public void DeletePlaneType(int id)
-        {
-            var planeType = unitOfWork.PlaneTypes.Get(id);
-
-            if (planeType == null)
-                throw new ValidationException($"Plane Type with this id {id} not found");
-
-            unitOfWork.PlaneTypes.Delete(id);
-        }
-
         public PlaneTypeDTO GetPlaneType(int id)
         {
             var planeType = unitOfWork.PlaneTypes.Get(id);
@@ -85,6 +53,48 @@ namespace BusinessLogicLayer.Services
                 Seats = planeTypeDTO.Seats,
                 Carrying = planeTypeDTO.Carrying
             });
+        }
+
+        public void CreatePlaneType(PlaneTypeDTO planeTypeDTO)
+        {
+            if (unitOfWork.PlaneTypes.Get(planeTypeDTO.Id) != null)
+                throw new ValidationException($"Plane Type with this id {planeTypeDTO.Id} already exist");
+
+            PlaneType planeType = new PlaneType
+            {
+                Id=planeTypeDTO.Id,
+                Model=planeTypeDTO.Model,
+                Seats= planeTypeDTO.Seats,
+                Carrying= planeTypeDTO.Carrying
+            };
+
+            unitOfWork.PlaneTypes.Create(planeType);
+        }
+
+        public void DeleteAllPlaneTypes()
+        {
+            unitOfWork.PlaneTypes.DeleteAll();
+
+            foreach (var plane in unitOfWork.Planes.GetAll())
+            {
+                plane.TypeId = 0;
+            }
+
+        }
+
+        public void DeletePlaneType(int id)
+        {
+            var planeType = unitOfWork.PlaneTypes.Get(id);
+
+            if (planeType == null)
+                throw new ValidationException($"Plane Type with this id {id} not found");
+
+            unitOfWork.PlaneTypes.Delete(id);
+
+            foreach (var plane in unitOfWork.Planes.Find(p => p.TypeId == id))
+            {
+                plane.TypeId=0;
+            }
         }
     }
 }
