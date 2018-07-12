@@ -2,7 +2,7 @@
 using DataAccessLayer.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace DataAccessLayer.Implementation.Repositories
 {
@@ -15,39 +15,48 @@ namespace DataAccessLayer.Implementation.Repositories
             dataSource = data;
         }
 
-        public void Create(Crew entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Crew> Find(Func<Crew, bool> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
         public Crew Get(int id)
         {
-            throw new NotImplementedException();
+            return dataSource.CrewList.Find(c => c.Id == id);
         }
 
         public IEnumerable<Crew> GetAll()
         {
-            throw new NotImplementedException();
+            return dataSource.CrewList;
+        }
+
+        public void Create(Crew entity)
+        {
+            dataSource.CrewList.Add(entity);
+        }
+
+        public IEnumerable<Crew> Find(Func<Crew, bool> predicate)
+        {
+            return dataSource.CrewList.Where(predicate);
         }
 
         public void Update(Crew entity)
         {
-            throw new NotImplementedException();
+            var flight = dataSource.CrewList.Find(c => c.Id == entity.Id);
+
+            if (entity.PilotId != 0)
+                flight.PilotId = entity.PilotId;
+            if (entity.StewardessesId != null)
+                flight.StewardessesId = entity.StewardessesId;
+        }
+
+        public void Delete(int id)
+        {
+            var crews = dataSource.CrewList;
+
+            crews.Remove(crews.Find(c => c.Id == id));
+        }
+
+        public void DeleteAll()
+        {
+            var crews = dataSource.CrewList;
+
+            crews.RemoveRange(0, crews.Count());
         }
     }
 }
