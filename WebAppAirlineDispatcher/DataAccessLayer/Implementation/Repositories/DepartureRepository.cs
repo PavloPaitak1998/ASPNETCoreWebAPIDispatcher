@@ -2,7 +2,7 @@
 using DataAccessLayer.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace DataAccessLayer.Implementation.Repositories
 {
@@ -15,39 +15,52 @@ namespace DataAccessLayer.Implementation.Repositories
             dataSource = data;
         }
 
-        public void Create(Departure entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Departure> Find(Func<Departure, bool> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
         public Departure Get(int id)
         {
-            throw new NotImplementedException();
+            return dataSource.DepartureList.Find(d => d.Id == id);
         }
 
         public IEnumerable<Departure> GetAll()
         {
-            throw new NotImplementedException();
+            return dataSource.DepartureList;
+        }
+
+        public void Create(Departure entity)
+        {
+            dataSource.DepartureList.Add(entity);
+        }
+
+        public IEnumerable<Departure> Find(Func<Departure, bool> predicate)
+        {
+            return dataSource.DepartureList.Where(predicate);
         }
 
         public void Update(Departure entity)
         {
-            throw new NotImplementedException();
+            var departure = dataSource.DepartureList.Find(d => d.Id == entity.Id);
+
+            if (entity.FlightNumber != 0)
+                departure.FlightNumber = entity.FlightNumber;
+            if (entity.CrewId != 0)
+                departure.CrewId = entity.CrewId;
+            if (entity.PlaneId != 0)
+                departure.PlaneId = entity.PlaneId;
+            if (entity.Time != DateTime.MinValue)
+                departure.Time = entity.Time;
+        }
+
+        public void Delete(int id)
+        {
+            var departures = dataSource.DepartureList;
+
+            departures.Remove(departures.Find(d => d.Id == id));
+        }
+
+        public void DeleteAll()
+        {
+            var departures = dataSource.DepartureList;
+
+            departures.RemoveRange(0, departures.Count());
         }
     }
 }

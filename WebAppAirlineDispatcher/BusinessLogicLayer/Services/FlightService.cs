@@ -46,9 +46,7 @@ namespace BusinessLogicLayer.Services
         public void CreateFlight(FlightDTO flightDTO)
         {
             if (unitOfWork.Flights.Get(flightDTO.Number)!=null)
-            {
                 throw new ValidationException($"Flight with this number {flightDTO.Number} already exist");
-            }
 
             List<Ticket> tickets = new List<Ticket>();
 
