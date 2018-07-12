@@ -2,7 +2,7 @@
 using DataAccessLayer.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace DataAccessLayer.Implementation.Repositories
 {
@@ -15,39 +15,51 @@ namespace DataAccessLayer.Implementation.Repositories
             dataSource = data;
         }
 
-        public void Create(Stewardess entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Stewardess> Find(Func<Stewardess, bool> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
         public Stewardess Get(int id)
         {
-            throw new NotImplementedException();
+            return dataSource.StewardessList.Find(s => s.Id == id);
         }
 
         public IEnumerable<Stewardess> GetAll()
         {
-            throw new NotImplementedException();
+            return dataSource.StewardessList;
+        }
+
+        public void Create(Stewardess entity)
+        {
+            dataSource.StewardessList.Add(entity);
+        }
+
+
+        public IEnumerable<Stewardess> Find(Func<Stewardess, bool> predicate)
+        {
+            return dataSource.StewardessList.Where(predicate);
         }
 
         public void Update(Stewardess entity)
         {
-            throw new NotImplementedException();
+            var stewardess = dataSource.StewardessList.Find(s => s.Id == entity.Id);
+
+            if (entity.FirstName != null)
+                stewardess.FirstName = entity.FirstName;
+            if (entity.LastName != null)
+                stewardess.LastName = entity.LastName;
+            if (entity.BirthDate != DateTime.MinValue)
+                stewardess.BirthDate = entity.BirthDate;
+        }
+
+        public void Delete(int id)
+        {
+            var stewardesses = dataSource.StewardessList;
+
+            stewardesses.Remove(stewardesses.Find(s => s.Id == id));
+        }
+
+        public void DeleteAll()
+        {
+            var stewardesses = dataSource.StewardessList;
+
+            stewardesses.RemoveRange(0, stewardesses.Count());
         }
     }
 }
