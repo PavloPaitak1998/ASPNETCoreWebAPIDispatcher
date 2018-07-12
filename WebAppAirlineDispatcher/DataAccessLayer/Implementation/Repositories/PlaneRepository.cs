@@ -2,8 +2,7 @@
 using DataAccessLayer.Models;
 using System;
 using System.Collections.Generic;
-
-using System.Text;
+using System.Linq;
 
 namespace DataAccessLayer.Implementation.Repositories
 {
@@ -16,39 +15,52 @@ namespace DataAccessLayer.Implementation.Repositories
             dataSource = data;
         }
 
-        public void Create(Plane entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Plane> Find(Func<Plane, bool> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
         public Plane Get(int id)
         {
-            throw new NotImplementedException();
+            return dataSource.PlaneList.Find(p => p.Id == id);
         }
 
         public IEnumerable<Plane> GetAll()
         {
-            throw new NotImplementedException();
+            return dataSource.PlaneList;
+        }
+
+        public void Create(Plane entity)
+        {
+            dataSource.PlaneList.Add(entity);
+        }
+
+        public IEnumerable<Plane> Find(Func<Plane, bool> predicate)
+        {
+            return dataSource.PlaneList.Where(predicate);
         }
 
         public void Update(Plane entity)
         {
-            throw new NotImplementedException();
+            var plane = dataSource.PlaneList.Find(p => p.Id == entity.Id);
+
+            if (entity.Name != null)
+                plane.Name = entity.Name;
+            if (entity.TypeId != 0)
+                plane.TypeId = entity.TypeId;
+            if (entity.ReleaseDate != DateTime.MinValue)
+                plane.ReleaseDate = entity.ReleaseDate;
+            if (entity.Lifetime != TimeSpan.MinValue)
+                plane.Lifetime = entity.Lifetime;
+        }
+
+        public void Delete(int id)
+        {
+            var planes = dataSource.PlaneList;
+
+            planes.Remove(planes.Find(p => p.Id == id));
+        }
+
+        public void DeleteAll()
+        {
+            var planes = dataSource.PlaneList;
+
+            planes.RemoveRange(0, planes.Count());
         }
     }
 }

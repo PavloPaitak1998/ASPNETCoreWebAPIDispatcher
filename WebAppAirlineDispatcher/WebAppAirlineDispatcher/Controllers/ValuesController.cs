@@ -2,43 +2,110 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Shared.DTO;
+using WebAppAirlineDispatcher.Modules;
+using Shared.Exceptions;
 
 namespace WebAppAirlineDispatcher.Controllers
 {
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class PlanesController : Controller
     {
-        // GET api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
+        IPlaneService planeService;
+        IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<PlaneItem, PlaneDTO>()).CreateMapper();
+
+
+        public PlanesController(IPlaneService serv)
         {
-            return new string[] { "value1", "value2" };
+            planeService = serv;
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+
+        // GET: api/planes
+        public IActionResult Get()
         {
-            return "value";
+            return Ok(planeService.GetPlanes());
         }
 
-        // POST api/values
+        // GET api/planes/5
+        [HttpGet("{id}", Name = "GetPlane")]
+        public IActionResult Get(int id)
+        {
+            try
+            {
+                var flight = planeService.GetPlane(id);
+                return Ok(flight);
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(new { Exception = e.Message });
+            }
+        }
+
+        // POST api/planes
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody]PlaneItem planeItem)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var planeDTO = mapper.Map<PlaneDTO>(planeItem);
+
+            try
+            {
+                planeService.CreatePlane(planeDTO);
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(new { Exception = e.Message });
+            }
+
+            return CreatedAtRoute("GetPlane", new { id = planeItem.Id }, planeItem);
         }
 
-        // PUT api/values/5
+        // PUT api/planes/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put(int id, [FromBody]PlaneItem planeItem)
         {
+            var planeDTO = mapper.Map<PlaneDTO>(planeItem);
+            planeDTO.Id = id;
+
+            try
+            {
+                planeService.UpdatePlane(planeDTO);
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(new { Exception = e.Message });
+            }
+
+            return Ok(planeItem);
         }
 
-        // DELETE api/values/5
+        // DELETE api/planes/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            try
+            {
+                planeService.DeletePlane(id);
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(new { Exception = e.Message });
+            }
+            return NoContent();
+        }
+
+        // DELETE api/planes
+        [HttpDelete]
+        public IActionResult Delete()
+        {
+            planeService.DeleteAllPlanes();
+            return NoContent();
         }
     }
 }
