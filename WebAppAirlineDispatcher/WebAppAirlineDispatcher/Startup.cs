@@ -29,6 +29,7 @@ namespace WebAppAirlineDispatcher
             services.AddTransient<IStewardessService, StewardessService>();
             services.AddTransient<IPilotService, PilotService>();
             services.AddTransient<IPlaneService, PlaneService>();
+            services.AddTransient<IPlaneTypeService, PlaneTypeService>();
             services.AddTransient<IDepartureService, DepartureService>();
             services.AddSingleton<IDataSource, DataSource>();
             services.AddSingleton<IUnitOfWork, UnitOfWork>();

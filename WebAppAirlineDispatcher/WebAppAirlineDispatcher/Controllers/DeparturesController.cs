@@ -90,7 +90,7 @@ namespace WebAppAirlineDispatcher.Controllers
         {
             try
             {
-                departureService.CreateDeparture(id);
+                departureService.DeleteDeparture(id);
             }
             catch (ValidationException e)
             {
