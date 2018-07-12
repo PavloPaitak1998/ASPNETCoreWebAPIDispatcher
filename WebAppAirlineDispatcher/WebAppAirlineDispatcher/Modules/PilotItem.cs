@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace DataAccessLayer.Models
+namespace WebAppAirlineDispatcher.Modules
 {
-    public sealed class Pilot
+    public class PilotItem
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

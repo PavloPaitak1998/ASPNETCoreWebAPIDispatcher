@@ -114,16 +114,16 @@ namespace DataAccessLayer.Data
         {
             var pilotsList = new List<Pilot>
             {
-                new Pilot{Id=1,FirstName="Tom",LastName="Piton",BirthDate=DateTime.Parse("12.07.1998"),Experience="1 year"},
-                new Pilot{Id=2,FirstName="Ted",LastName="Pen",BirthDate=DateTime.Parse("28.03.1990"),Experience="2 year"},
-                new Pilot{Id=3,FirstName="Pavlo",LastName="Toden",BirthDate=DateTime.Parse("12.06.1994"),Experience="3 year"},
-                new Pilot{Id=4,FirstName="Jeck",LastName="Grood",BirthDate=DateTime.Parse("01.09.1993"),Experience="5 year"},
-                new Pilot{Id=5,FirstName="Jim",LastName="Draft",BirthDate=DateTime.Parse("15.02.1995"),Experience="6 year"},
-                new Pilot{Id=6,FirstName="Robin",LastName="Miller",BirthDate=DateTime.Parse("13.01.1998"),Experience="7 year"},
-                new Pilot{Id=7,FirstName="Donald",LastName="Shvimer",BirthDate=DateTime.Parse("12.12.1993"),Experience="8 year"},
-                new Pilot{Id=8,FirstName="Gage",LastName="Simpson",BirthDate=DateTime.Parse("12.07.1997"),Experience="9 year"},
-                new Pilot{Id=9,FirstName="Pavlo",LastName="Tramp",BirthDate=DateTime.Parse("11.07.1991"),Experience="4 year"},
-                new Pilot{Id=10,FirstName="Ivan",LastName="Cruft",BirthDate=DateTime.Parse("18.04.1994"),Experience="1 month"}
+                new Pilot{Id=1,FirstName="Tom",LastName="Piton",BirthDate=DateTime.Parse("12.07.1998"),Experience=1},
+                new Pilot{Id=2,FirstName="Ted",LastName="Pen",BirthDate=DateTime.Parse("28.03.1990"),Experience=2},
+                new Pilot{Id=3,FirstName="Pavlo",LastName="Toden",BirthDate=DateTime.Parse("12.06.1994"),Experience=3},
+                new Pilot{Id=4,FirstName="Jeck",LastName="Grood",BirthDate=DateTime.Parse("01.09.1993"),Experience=5},
+                new Pilot{Id=5,FirstName="Jim",LastName="Draft",BirthDate=DateTime.Parse("15.02.1995"),Experience=6},
+                new Pilot{Id=6,FirstName="Robin",LastName="Miller",BirthDate=DateTime.Parse("13.01.1998"),Experience=7},
+                new Pilot{Id=7,FirstName="Donald",LastName="Shvimer",BirthDate=DateTime.Parse("12.12.1993"),Experience=8},
+                new Pilot{Id=8,FirstName="Gage",LastName="Simpson",BirthDate=DateTime.Parse("12.07.1997"),Experience=9},
+                new Pilot{Id=9,FirstName="Pavlo",LastName="Tramp",BirthDate=DateTime.Parse("11.07.1991"),Experience=10},
+                new Pilot{Id=10,FirstName="Ivan",LastName="Cruft",BirthDate=DateTime.Parse("18.04.1994"),Experience=11}
 
             };
 
