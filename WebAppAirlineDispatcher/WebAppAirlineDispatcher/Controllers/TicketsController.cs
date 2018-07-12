@@ -1,93 +1,96 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
+using Shared.Exceptions;
 using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTO;
-using Shared.Exceptions;
 using WebAppAirlineDispatcher.Modules;
 
 namespace WebAppAirlineDispatcher.Controllers
 {
     [Route("api/[controller]")]
-    public class FlightsController : Controller
+    public class TicketsController : Controller
     {
-        IFlightService flightService;
-        IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<FlightItem, FlightDTO>()).CreateMapper();
+        ITicketService ticketService;
+        IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<TicketItem, TicketDTO>()).CreateMapper();
 
 
-        public FlightsController(IFlightService serv)
+        public TicketsController(ITicketService serv)
         {
-            flightService = serv;
+            ticketService = serv;
         }
 
-
-        // GET: api/flights
+        // GET: api/tickets
         public IActionResult Get()
         {
-            return Ok(flightService.GetFlights());
+            return Ok(ticketService.GetTickets());
         }
 
-        // GET api/flights/5
-        [HttpGet("{id}", Name = "GetFlight")]
+        // GET api/tickets/5
+        [HttpGet("{id}", Name = "GetTicket")]
         public IActionResult Get(int id)
         {
             try
             {
-                var flight = flightService.GetFlight(id);
-                return Ok(flight);
+                var ticket = ticketService.GetTicket(id);
+                return Ok(ticket);
             }
             catch (ValidationException e)
             {
                 return BadRequest(new { Exception = e.Message });
-            }        
+            }
         }
 
-        // POST api/flights
+        // POST api/tickets
         [HttpPost]
-        public IActionResult Post([FromBody]FlightItem flightItem)
+        public IActionResult Post([FromBody]TicketItem ticketItem)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var flightDTO = mapper.Map<FlightDTO>(flightItem);
+            var ticketDTO = mapper.Map<TicketDTO>(ticketItem);
 
             try
             {
-                flightService.CreateFlight(flightDTO);
+                ticketService.CreateTicket(ticketDTO);
             }
             catch (ValidationException e)
             {
                 return BadRequest(new { Exception = e.Message });
             }
 
-            return CreatedAtRoute("GetFlight", new { id = flightItem.Number }, flightItem);
+            return CreatedAtRoute("GetTicket", new { id = ticketItem.Id }, ticketItem);
         }
 
-        // PUT api/flights/5
+        // PUT api/tickets/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]FlightItem flightItem)
+        public IActionResult Put(int id, [FromBody]TicketItem ticketItem)
         {
-            var flightDTO = mapper.Map<FlightDTO>(flightItem);
-            flightDTO.Number = id;
+            var ticketDTO = mapper.Map<TicketDTO>(ticketItem);
+            ticketDTO.Id = id;
 
             try
             {
-                flightService.UpdateFlight(flightDTO);            
+                ticketService.UpdateTicket(ticketDTO);
             }
             catch (ValidationException e)
             {
                 return BadRequest(new { Exception = e.Message });
             }
 
-            return Ok(flightItem);
+            return Ok(ticketItem);
         }
 
-        // DELETE api/flights/5
+        // DELETE api/tickets/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             try
             {
-                flightService.DeleteFlight(id);
+                ticketService.DeleteTicket(id);
             }
             catch (ValidationException e)
             {
@@ -96,13 +99,12 @@ namespace WebAppAirlineDispatcher.Controllers
             return NoContent();
         }
 
-        // DELETE api/flights
+        // DELETE api/tickets
         [HttpDelete]
         public IActionResult Delete()
         {
-            flightService.DeleteAllFlights();
+            ticketService.DeleteAllTickets();
             return NoContent();
         }
-
     }
 }

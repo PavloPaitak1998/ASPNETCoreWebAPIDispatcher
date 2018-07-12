@@ -74,16 +74,16 @@ namespace BusinessLogicLayer.Services
             unitOfWork.Flights.Create(flight);
         }
 
-        public void UpdateFlight(int number, FlightDTO flightDTO)
+        public void UpdateFlight(FlightDTO flightDTO)
         {
-            var flight = unitOfWork.Flights.Get(number);
+            var flight = unitOfWork.Flights.Get(flightDTO.Number);
 
             if (flight == null)
-                throw new ValidationException($"Flight with this number {number} not found");
+                throw new ValidationException($"Flight with this number {flightDTO.Number} not found");
 
             unitOfWork.Flights.Update(new Flight
             {
-                Number=number,
+                Number= flightDTO.Number,
                 PointOfDeparture = flightDTO.PointOfDeparture,
                 DepartureTime = flightDTO.DepartureTime,
                 Destination = flightDTO.Destination,

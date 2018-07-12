@@ -25,6 +25,7 @@ namespace WebAppAirlineDispatcher
         {
             services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
             services.AddTransient<IFlightService, FlightService>();
+            services.AddTransient<ITicketService, TicketService>();
             services.AddSingleton<IDataSource, DataSource>();
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
         }
