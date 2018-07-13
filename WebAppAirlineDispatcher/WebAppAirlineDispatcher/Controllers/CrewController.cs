@@ -8,9 +8,9 @@ namespace WebAppAirlineDispatcher.Controllers
     [Route("api/[controller]")]
     public class CrewController : Controller
     {
-        ICrewService crewService;
+        IEntityService<CrewDTO> crewService;
 
-        public CrewController(ICrewService serv)
+        public CrewController(IEntityService<CrewDTO> serv)
         {
             crewService = serv;
         }
@@ -19,7 +19,7 @@ namespace WebAppAirlineDispatcher.Controllers
         // GET: api/crew
         public IActionResult Get()
         {
-            return Ok(crewService.GetCrew());
+            return Ok(crewService.GetEntities());
         }
 
         // GET api/crew/5
@@ -28,7 +28,7 @@ namespace WebAppAirlineDispatcher.Controllers
         {
             try
             {
-                var crew = crewService.GetCrew(id);
+                var crew = crewService.GetEntity(id);
                 return Ok(crew);
             }
             catch (ValidationException e)
@@ -46,7 +46,7 @@ namespace WebAppAirlineDispatcher.Controllers
 
             try
             {
-                crewService.CreateCrew(crewDTO);
+                crewService.CreateEntity(crewDTO);
             }
             catch (ValidationException e)
             {
@@ -64,14 +64,14 @@ namespace WebAppAirlineDispatcher.Controllers
 
             try
             {
-                crewService.UpdateCrew(crewDTO);
+                crewService.UpdateEntity(crewDTO);
             }
             catch (ValidationException e)
             {
                 return BadRequest(new { Exception = e.Message });
             }
 
-            return Ok(crewService.GetCrew(id));
+            return Ok(crewService.GetEntity(id));
         }
 
         // DELETE api/crew/5
@@ -80,7 +80,7 @@ namespace WebAppAirlineDispatcher.Controllers
         {
             try
             {
-                crewService.DeleteCrew(id);
+                crewService.DeleteEntity(id);
             }
             catch (ValidationException e)
             {
@@ -93,7 +93,7 @@ namespace WebAppAirlineDispatcher.Controllers
         [HttpDelete]
         public IActionResult Delete()
         {
-            crewService.DeleteAllCrew();
+            crewService.DeleteAllEntities();
             return NoContent();
         }
     }

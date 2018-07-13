@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace BusinessLogicLayer.Services
 {
-    public class StewardessService : IStewardessService
+    public class StewardessService : IEntityService<StewardessDTO>
     {
         IUnitOfWork unitOfWork;
 
@@ -17,7 +17,7 @@ namespace BusinessLogicLayer.Services
             unitOfWork = uow;
         }
 
-        public StewardessDTO GetStewardess(int id)
+        public StewardessDTO GetEntity(int id)
         {
             var stewardess = unitOfWork.Stewardesses.Get(id);
 
@@ -33,14 +33,14 @@ namespace BusinessLogicLayer.Services
             };
         }
 
-        public IEnumerable<StewardessDTO> GetStewardesses()
+        public IEnumerable<StewardessDTO> GetEntities()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Stewardess, StewardessDTO>()).CreateMapper();
 
             return mapper.Map<IEnumerable<Stewardess>, List<StewardessDTO>>(unitOfWork.Stewardesses.GetAll());
         }
 
-        public void CreateStewardess(StewardessDTO stewardessDTO)
+        public void CreateEntity(StewardessDTO stewardessDTO)
         {
 
             if (unitOfWork.Stewardesses.Get(stewardessDTO.Id) != null)
@@ -59,7 +59,7 @@ namespace BusinessLogicLayer.Services
             unitOfWork.Stewardesses.Create(stewardess);
         }
 
-        public void UpdateStewardess(StewardessDTO stewardessDTO)
+        public void UpdateEntity(StewardessDTO stewardessDTO)
         {
             var stewardess = unitOfWork.Stewardesses.Get(stewardessDTO.Id);
 
@@ -75,7 +75,7 @@ namespace BusinessLogicLayer.Services
             });
         }
 
-        public void DeleteAllStewardesses()
+        public void DeleteAllEntities()
         {
             unitOfWork.Stewardesses.DeleteAll();
 
@@ -86,7 +86,7 @@ namespace BusinessLogicLayer.Services
 
         }
 
-        public void DeleteStewardess(int id)
+        public void DeleteEntity(int id)
         {
             var stewardess = unitOfWork.Stewardesses.Get(id);
 

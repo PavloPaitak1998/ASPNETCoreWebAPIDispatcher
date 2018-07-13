@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace BusinessLogicLayer.Services
 {
-    public class PilotService : IPilotService
+    public class PilotService : IEntityService<PilotDTO>
     {
         IUnitOfWork unitOfWork;
 
@@ -17,7 +17,7 @@ namespace BusinessLogicLayer.Services
             unitOfWork = uow;
         }
 
-        public PilotDTO GetPilot(int id)
+        public PilotDTO GetEntity(int id)
         {
             var pilot = unitOfWork.Pilots.Get(id);
 
@@ -34,14 +34,14 @@ namespace BusinessLogicLayer.Services
             };
         }
 
-        public IEnumerable<PilotDTO> GetPilots()
+        public IEnumerable<PilotDTO> GetEntities()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Pilot, PilotDTO>()).CreateMapper();
 
             return mapper.Map<IEnumerable<Pilot>, List<PilotDTO>>(unitOfWork.Pilots.GetAll());
         }
 
-        public void CreatePilot(PilotDTO pilotDTO)
+        public void CreateEntity(PilotDTO pilotDTO)
         {
             if (unitOfWork.Pilots.Get(pilotDTO.Id) != null)
             {
@@ -61,7 +61,7 @@ namespace BusinessLogicLayer.Services
             unitOfWork.Pilots.Create(pilot);
         }
 
-        public void UpdatePilot(PilotDTO pilotDTO)
+        public void UpdateEntity(PilotDTO pilotDTO)
         {
             var pilot = unitOfWork.Pilots.Get(pilotDTO.Id);
 
@@ -78,7 +78,7 @@ namespace BusinessLogicLayer.Services
             });
         }
 
-        public void DeleteAllPilots()
+        public void DeleteAllEntities()
         {
             unitOfWork.Pilots.DeleteAll();
 
@@ -89,7 +89,7 @@ namespace BusinessLogicLayer.Services
 
         }
 
-        public void DeletePilot(int id)
+        public void DeleteEntity(int id)
         {
             var pilot = unitOfWork.Pilots.Get(id);
 

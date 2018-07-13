@@ -8,9 +8,9 @@ namespace WebAppAirlineDispatcher.Controllers
     [Route("api/[controller]")]
     public class PlaneTypesController : Controller
     {
-        IPlaneTypeService planeTypeService;
+        IEntityService<PlaneTypeDTO> planeTypeService;
 
-        public PlaneTypesController(IPlaneTypeService serv)
+        public PlaneTypesController(IEntityService<PlaneTypeDTO> serv)
         {
             planeTypeService = serv;
         }
@@ -19,7 +19,7 @@ namespace WebAppAirlineDispatcher.Controllers
         // GET: api/planetypes
         public IActionResult Get()
         {
-            return Ok(planeTypeService.GetPlaneTypes());
+            return Ok(planeTypeService.GetEntities());
         }
 
         // GET api/planetypes/5
@@ -28,7 +28,7 @@ namespace WebAppAirlineDispatcher.Controllers
         {
             try
             {
-                var flight = planeTypeService.GetPlaneType(id);
+                var flight = planeTypeService.GetEntity(id);
                 return Ok(flight);
             }
             catch (ValidationException e)
@@ -46,7 +46,7 @@ namespace WebAppAirlineDispatcher.Controllers
 
             try
             {
-                planeTypeService.CreatePlaneType(planeTypeDTO);
+                planeTypeService.CreateEntity(planeTypeDTO);
             }
             catch (ValidationException e)
             {
@@ -64,14 +64,14 @@ namespace WebAppAirlineDispatcher.Controllers
 
             try
             {
-                planeTypeService.UpdatePlaneType(planeTypeDTO);
+                planeTypeService.UpdateEntity(planeTypeDTO);
             }
             catch (ValidationException e)
             {
                 return BadRequest(new { Exception = e.Message });
             }
 
-            return Ok(planeTypeService.GetPlaneType(id));
+            return Ok(planeTypeService.GetEntity(id));
         }
 
         // DELETE api/planetypes/5
@@ -80,7 +80,7 @@ namespace WebAppAirlineDispatcher.Controllers
         {
             try
             {
-                planeTypeService.DeletePlaneType(id);
+                planeTypeService.DeleteEntity(id);
             }
             catch (ValidationException e)
             {
@@ -93,7 +93,7 @@ namespace WebAppAirlineDispatcher.Controllers
         [HttpDelete]
         public IActionResult Delete()
         {
-            planeTypeService.DeleteAllPlaneTypes();
+            planeTypeService.DeleteAllEntities();
             return NoContent();
         }
     }

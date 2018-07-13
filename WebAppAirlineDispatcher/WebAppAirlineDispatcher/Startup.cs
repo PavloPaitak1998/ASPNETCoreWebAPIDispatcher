@@ -9,6 +9,7 @@ using BusinessLogicLayer.Services;
 using DataAccessLayer.Implementation.UnitOfWork;
 using FluentValidation.AspNetCore;
 using Shared.Validators;
+using Shared.DTO;
 
 namespace WebAppAirlineDispatcher
 {
@@ -25,14 +26,14 @@ namespace WebAppAirlineDispatcher
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<FlightDTOValidator>());
-            services.AddTransient<IFlightService, FlightService>();
-            services.AddTransient<ITicketService, TicketService>();
-            services.AddTransient<IStewardessService, StewardessService>();
-            services.AddTransient<IPilotService, PilotService>();
-            services.AddTransient<IPlaneService, PlaneService>();
-            services.AddTransient<ICrewService, CrewService>();
-            services.AddTransient<IPlaneTypeService, PlaneTypeService>();
-            services.AddTransient<IDepartureService, DepartureService>();
+            services.AddTransient<IEntityService<FlightDTO>, FlightService>();
+            services.AddTransient<IEntityService<TicketDTO>, TicketService>();
+            services.AddTransient<IEntityService<StewardessDTO>, StewardessService>();
+            services.AddTransient<IEntityService<PilotDTO>, PilotService>();
+            services.AddTransient<IEntityService<PlaneDTO>, PlaneService>();
+            services.AddTransient<IEntityService<CrewDTO>, CrewService>();
+            services.AddTransient<IEntityService<PlaneTypeDTO>, PlaneTypeService>();
+            services.AddTransient<IEntityService<DepartureDTO>, DepartureService>();
             services.AddSingleton<IDataSource, DataSource>();
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
         }

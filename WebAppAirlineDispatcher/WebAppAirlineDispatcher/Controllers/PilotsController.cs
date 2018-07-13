@@ -8,9 +8,9 @@ namespace WebAppAirlineDispatcher.Controllers
     [Route("api/[controller]")]
     public class PilotsController : Controller
     {
-        IPilotService pilotService;
+        IEntityService<PilotDTO> pilotService;
 
-        public PilotsController(IPilotService serv)
+        public PilotsController(IEntityService<PilotDTO> serv)
         {
             pilotService = serv;
         }
@@ -18,7 +18,7 @@ namespace WebAppAirlineDispatcher.Controllers
         // GET: api/pilots
         public IActionResult Get()
         {
-            return Ok(pilotService.GetPilots());
+            return Ok(pilotService.GetEntities());
         }
 
         // GET api/pilots/5
@@ -27,7 +27,7 @@ namespace WebAppAirlineDispatcher.Controllers
         {
             try
             {
-                var pilot = pilotService.GetPilot(id);
+                var pilot = pilotService.GetEntity(id);
                 return Ok(pilot);
             }
             catch (ValidationException e)
@@ -45,7 +45,7 @@ namespace WebAppAirlineDispatcher.Controllers
 
             try
             {
-                pilotService.CreatePilot(pilotDTO);
+                pilotService.CreateEntity(pilotDTO);
             }
             catch (ValidationException e)
             {
@@ -63,14 +63,14 @@ namespace WebAppAirlineDispatcher.Controllers
 
             try
             {
-                pilotService.UpdatePilot(pilotDTO);
+                pilotService.UpdateEntity(pilotDTO);
             }
             catch (ValidationException e)
             {
                 return BadRequest(new { Exception = e.Message });
             }
 
-            return Ok(pilotService.GetPilot(id));
+            return Ok(pilotService.GetEntity(id));
         }
 
         // DELETE api/pilots/5
@@ -79,7 +79,7 @@ namespace WebAppAirlineDispatcher.Controllers
         {
             try
             {
-                pilotService.DeletePilot(id);
+                pilotService.DeleteEntity(id);
             }
             catch (ValidationException e)
             {
@@ -92,7 +92,7 @@ namespace WebAppAirlineDispatcher.Controllers
         [HttpDelete]
         public IActionResult Delete()
         {
-            pilotService.DeleteAllPilots();
+            pilotService.DeleteAllEntities();
             return NoContent();
         }
 

@@ -8,9 +8,9 @@ namespace WebAppAirlineDispatcher.Controllers
     [Route("api/[controller]")]
     public class StewardessesController : Controller
     {
-        IStewardessService stewardessService;
+        IEntityService<StewardessDTO> stewardessService;
 
-        public StewardessesController(IStewardessService serv)
+        public StewardessesController(IEntityService<StewardessDTO> serv)
         {
             stewardessService = serv;
         }
@@ -19,7 +19,7 @@ namespace WebAppAirlineDispatcher.Controllers
         // GET: api/stewardesses
         public IActionResult Get()
         {
-            return Ok(stewardessService.GetStewardesses());
+            return Ok(stewardessService.GetEntities());
         }
 
         // GET api/stewardesses/5
@@ -28,7 +28,7 @@ namespace WebAppAirlineDispatcher.Controllers
         {
             try
             {
-                var flight = stewardessService.GetStewardess(id);
+                var flight = stewardessService.GetEntity(id);
                 return Ok(flight);
             }
             catch (ValidationException e)
@@ -46,7 +46,7 @@ namespace WebAppAirlineDispatcher.Controllers
 
             try
             {
-                stewardessService.CreateStewardess(stewardessDTO);
+                stewardessService.CreateEntity(stewardessDTO);
             }
             catch (ValidationException e)
             {
@@ -64,14 +64,14 @@ namespace WebAppAirlineDispatcher.Controllers
 
             try
             {
-                stewardessService.UpdateStewardess(stewardessDTO);
+                stewardessService.UpdateEntity(stewardessDTO);
             }
             catch (ValidationException e)
             {
                 return BadRequest(new { Exception = e.Message });
             }
 
-            return Ok(stewardessService.GetStewardess(id));
+            return Ok(stewardessService.GetEntity(id));
         }
 
         // DELETE api/stewardesses/5
@@ -80,7 +80,7 @@ namespace WebAppAirlineDispatcher.Controllers
         {
             try
             {
-                stewardessService.DeleteStewardess(id);
+                stewardessService.DeleteEntity(id);
             }
             catch (ValidationException e)
             {
@@ -93,7 +93,7 @@ namespace WebAppAirlineDispatcher.Controllers
         [HttpDelete]
         public IActionResult Delete()
         {
-            stewardessService.DeleteAllStewardesses();
+            stewardessService.DeleteAllEntities();
             return NoContent();
         }
     }

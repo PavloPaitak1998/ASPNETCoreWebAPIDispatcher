@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace BusinessLogicLayer.Services
 {
-    public class CrewService : ICrewService
+    public class CrewService : IEntityService<CrewDTO>
     {
         IUnitOfWork unitOfWork;
 
@@ -18,7 +18,7 @@ namespace BusinessLogicLayer.Services
             unitOfWork = uow;
         }
 
-        public CrewDTO GetCrew(int id)
+        public CrewDTO GetEntity(int id)
         {
             var crew = unitOfWork.Crew.Get(id);
 
@@ -33,14 +33,14 @@ namespace BusinessLogicLayer.Services
             };
         }
 
-        public IEnumerable<CrewDTO> GetCrew()
+        public IEnumerable<CrewDTO> GetEntities()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Crew, CrewDTO>()).CreateMapper();
 
             return mapper.Map<IEnumerable<Crew>, List<CrewDTO>>(unitOfWork.Crew.GetAll());
         }
 
-        public void CreateCrew(CrewDTO crewDTO)
+        public void CreateEntity(CrewDTO crewDTO)
         {
             if (unitOfWork.Crew.Get(crewDTO.Id) != null)
                 throw new ValidationException($"Crew with this id {crewDTO.Id} already exist");
@@ -70,7 +70,7 @@ namespace BusinessLogicLayer.Services
             unitOfWork.Crew.Create(crew);
         }
 
-        public void UpdateCrew(CrewDTO crewDTO)
+        public void UpdateEntity(CrewDTO crewDTO)
         {
             var crew = unitOfWork.Crew.Get(crewDTO.Id);
 
@@ -106,12 +106,12 @@ namespace BusinessLogicLayer.Services
             });
         }
 
-        public void DeleteAllCrew()
+        public void DeleteAllEntities()
         {
             unitOfWork.Crew.DeleteAll();
         }
 
-        public void DeleteCrew(int id)
+        public void DeleteEntity(int id)
         {
             var crew = unitOfWork.Crew.Get(id);
 

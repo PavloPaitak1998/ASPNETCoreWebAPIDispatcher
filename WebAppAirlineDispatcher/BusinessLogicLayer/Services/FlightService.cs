@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace BusinessLogicLayer.Services
 {
-    public class FlightService:IFlightService
+    public class FlightService:IEntityService<FlightDTO>
     {
         IUnitOfWork unitOfWork;
 
@@ -18,7 +18,7 @@ namespace BusinessLogicLayer.Services
             unitOfWork = uow;
         }
 
-        public FlightDTO GetFlight(int id)
+        public FlightDTO GetEntity(int id)
         {
             var flight = unitOfWork.Flights.Get(id);
 
@@ -37,14 +37,14 @@ namespace BusinessLogicLayer.Services
 
         }
 
-        public IEnumerable<FlightDTO> GetFlights()
+        public IEnumerable<FlightDTO> GetEntities()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Flight, FlightDTO>()).CreateMapper();
 
             return mapper.Map<IEnumerable<Flight>, List<FlightDTO>>(unitOfWork.Flights.GetAll());
         }
 
-        public void CreateFlight(FlightDTO flightDTO)
+        public void CreateEntity(FlightDTO flightDTO)
         {
             if (unitOfWork.Flights.Get(flightDTO.Number)!=null)
                 throw new ValidationException($"Flight with this number {flightDTO.Number} already exist");
@@ -73,7 +73,7 @@ namespace BusinessLogicLayer.Services
             unitOfWork.Flights.Create(flight);
         }
 
-        public void UpdateFlight(FlightDTO flightDTO)
+        public void UpdateEntity(FlightDTO flightDTO)
         {
             var flight = unitOfWork.Flights.Get(flightDTO.Number);
 
@@ -106,7 +106,7 @@ namespace BusinessLogicLayer.Services
             });
         }
 
-        public void DeleteAllFlights()
+        public void DeleteAllEntities()
         {
             unitOfWork.Flights.DeleteAll();
 
@@ -122,7 +122,7 @@ namespace BusinessLogicLayer.Services
 
         }
 
-        public void DeleteFlight(int id)
+        public void DeleteEntity(int id)
         {
             var flight = unitOfWork.Flights.Get(id);
 

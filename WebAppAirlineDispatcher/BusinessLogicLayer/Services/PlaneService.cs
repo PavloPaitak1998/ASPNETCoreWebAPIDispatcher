@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace BusinessLogicLayer.Services
 {
-    public class PlaneService: IPlaneService
+    public class PlaneService: IEntityService<PlaneDTO>
     {
         IUnitOfWork unitOfWork;
 
@@ -17,7 +17,7 @@ namespace BusinessLogicLayer.Services
             unitOfWork = uow;
         }
 
-        public PlaneDTO GetPlane(int id)
+        public PlaneDTO GetEntity(int id)
         {
             var plane = unitOfWork.Planes.Get(id);
 
@@ -34,14 +34,14 @@ namespace BusinessLogicLayer.Services
             };
         }
 
-        public IEnumerable<PlaneDTO> GetPlanes()
+        public IEnumerable<PlaneDTO> GetEntities()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Plane, PlaneDTO>()).CreateMapper();
 
             return mapper.Map<IEnumerable<Plane>, List<PlaneDTO>>(unitOfWork.Planes.GetAll());
         }
 
-        public void CreatePlane(PlaneDTO planeDTO)
+        public void CreateEntity(PlaneDTO planeDTO)
         {
             if (unitOfWork.Planes.Get(planeDTO.Id) != null)
                 throw new ValidationException($"Plane with this id {planeDTO.Id} already exist");
@@ -62,7 +62,7 @@ namespace BusinessLogicLayer.Services
             unitOfWork.Planes.Create(plane);
         }
 
-        public void UpdatePlane(PlaneDTO planeDTO)
+        public void UpdateEntity(PlaneDTO planeDTO)
         {
             var plane = unitOfWork.Planes.Get(planeDTO.Id);
 
@@ -86,7 +86,7 @@ namespace BusinessLogicLayer.Services
             });
         }
 
-        public void DeleteAllPlanes()
+        public void DeleteAllEntities()
         {
             unitOfWork.Planes.DeleteAll();
 
@@ -97,7 +97,7 @@ namespace BusinessLogicLayer.Services
 
         }
 
-        public void DeletePlane(int id)
+        public void DeleteEntity(int id)
         {
             var plane = unitOfWork.Planes.Get(id);
 

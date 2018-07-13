@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace BusinessLogicLayer.Services
 {
-    public class PlaneTypeService: IPlaneTypeService
+    public class PlaneTypeService: IEntityService<PlaneTypeDTO>
     {
         IUnitOfWork unitOfWork;
 
@@ -16,7 +16,7 @@ namespace BusinessLogicLayer.Services
         {
             unitOfWork = uow;
         }
-        public PlaneTypeDTO GetPlaneType(int id)
+        public PlaneTypeDTO GetEntity(int id)
         {
             var planeType = unitOfWork.PlaneTypes.Get(id);
 
@@ -32,14 +32,14 @@ namespace BusinessLogicLayer.Services
             };
         }
 
-        public IEnumerable<PlaneTypeDTO> GetPlaneTypes()
+        public IEnumerable<PlaneTypeDTO> GetEntities()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<PlaneType, PlaneTypeDTO>()).CreateMapper();
 
             return mapper.Map<IEnumerable<PlaneType>, List<PlaneTypeDTO>>(unitOfWork.PlaneTypes.GetAll());
         }
 
-        public void UpdatePlaneType(PlaneTypeDTO planeTypeDTO)
+        public void UpdateEntity(PlaneTypeDTO planeTypeDTO)
         {
             var planeType = unitOfWork.PlaneTypes.Get(planeTypeDTO.Id);
 
@@ -55,7 +55,7 @@ namespace BusinessLogicLayer.Services
             });
         }
 
-        public void CreatePlaneType(PlaneTypeDTO planeTypeDTO)
+        public void CreateEntity(PlaneTypeDTO planeTypeDTO)
         {
             if (unitOfWork.PlaneTypes.Get(planeTypeDTO.Id) != null)
                 throw new ValidationException($"Plane Type with this id {planeTypeDTO.Id} already exist");
@@ -71,7 +71,7 @@ namespace BusinessLogicLayer.Services
             unitOfWork.PlaneTypes.Create(planeType);
         }
 
-        public void DeleteAllPlaneTypes()
+        public void DeleteAllEntities()
         {
             unitOfWork.PlaneTypes.DeleteAll();
 
@@ -82,7 +82,7 @@ namespace BusinessLogicLayer.Services
 
         }
 
-        public void DeletePlaneType(int id)
+        public void DeleteEntity(int id)
         {
             var planeType = unitOfWork.PlaneTypes.Get(id);
 

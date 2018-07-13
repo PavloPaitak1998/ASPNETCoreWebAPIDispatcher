@@ -4,13 +4,11 @@ using DataAccessLayer.Interfaces;
 using DataAccessLayer.Models;
 using Shared.DTO;
 using Shared.Exceptions;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BusinessLogicLayer.Services
 {
-    public class DepartureService : IDepartureService
+    public class DepartureService : IEntityService<DepartureDTO>
     {
         IUnitOfWork unitOfWork;
 
@@ -19,7 +17,7 @@ namespace BusinessLogicLayer.Services
             unitOfWork = uow;
         }
 
-        public DepartureDTO GetDeparture(int id)
+        public DepartureDTO GetEntity(int id)
         {
             var departure = unitOfWork.Departures.Get(id);
 
@@ -36,14 +34,14 @@ namespace BusinessLogicLayer.Services
             };
         }
 
-        public IEnumerable<DepartureDTO> GetDepartures()
+        public IEnumerable<DepartureDTO> GetEntities()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Departure, DepartureDTO>()).CreateMapper();
 
             return mapper.Map<IEnumerable<Departure>, List<DepartureDTO>>(unitOfWork.Departures.GetAll());
         }
 
-        public void CreateDeparture(DepartureDTO departureDTO)
+        public void CreateEntity(DepartureDTO departureDTO)
         {
             if (unitOfWork.Departures.Get(departureDTO.Id) != null)
                 throw new ValidationException($"Departure with this id {departureDTO.Id} already exist");
@@ -73,7 +71,7 @@ namespace BusinessLogicLayer.Services
             unitOfWork.Departures.Create(departure);
         }
 
-        public void UpdateDeparture(DepartureDTO departureDTO)
+        public void UpdateEntity(DepartureDTO departureDTO)
         {
             var departure = unitOfWork.Departures.Get(departureDTO.Id);
 
@@ -111,12 +109,12 @@ namespace BusinessLogicLayer.Services
             });
         }
 
-        public void DeleteAllDepartures()
+        public void DeleteAllEntities()
         {
             unitOfWork.Departures.DeleteAll();
         }
 
-        public void DeleteDeparture(int id)
+        public void DeleteEntity(int id)
         {
             var departure = unitOfWork.Departures.Get(id);
 
