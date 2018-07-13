@@ -74,7 +74,7 @@ namespace BusinessLogicLayer.Services
                 FirstName = pilotDTO.FirstName,
                 LastName = pilotDTO.LastName,
                 BirthDate = pilotDTO.BirthDate,
-                Experience = pilotDTO.Experience.Value
+                Experience = pilotDTO.Experience==null?-1 : pilotDTO.Experience.Value
             });
         }
 
