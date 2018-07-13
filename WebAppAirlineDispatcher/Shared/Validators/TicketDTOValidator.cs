@@ -1,15 +1,15 @@
 ﻿using FluentValidation;
-using WebAppAirlineDispatcher.Modules;
+using Shared.DTO;
 
-namespace WebAppAirlineDispatcher.Validators
+namespace Shared.Validators
 {
-    public class TicketItemValidator : AbstractValidator<TicketItem>
+    public class TicketDTOValidator : AbstractValidator<TicketDTO>
     {
-        public TicketItemValidator()
+        public TicketDTOValidator()
         {
             RuleFor(t => t.Id).NotEmpty().WithMessage("Ticket id can't be empty !").GreaterThan(0);
             RuleFor(t => t.Price).NotEmpty().WithMessage("Price can't be empty !").GreaterThan(0);
-        }
 
+        }
     }
 }

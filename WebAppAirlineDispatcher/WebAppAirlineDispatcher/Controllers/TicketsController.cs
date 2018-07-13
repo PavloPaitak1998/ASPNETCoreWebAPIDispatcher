@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Shared.Exceptions;
+﻿using Shared.Exceptions;
 using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTO;
-using WebAppAirlineDispatcher.Modules;
 
 namespace WebAppAirlineDispatcher.Controllers
 {
@@ -15,8 +9,6 @@ namespace WebAppAirlineDispatcher.Controllers
     public class TicketsController : Controller
     {
         ITicketService ticketService;
-        IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<TicketItem, TicketDTO>()).CreateMapper();
-
 
         public TicketsController(ITicketService serv)
         {
@@ -46,12 +38,10 @@ namespace WebAppAirlineDispatcher.Controllers
 
         // POST api/tickets
         [HttpPost]
-        public IActionResult Post([FromBody]TicketItem ticketItem)
+        public IActionResult Post([FromBody]TicketDTO ticketDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
-            var ticketDTO = mapper.Map<TicketDTO>(ticketItem);
 
             try
             {
@@ -62,14 +52,13 @@ namespace WebAppAirlineDispatcher.Controllers
                 return BadRequest(new { Exception = e.Message });
             }
 
-            return CreatedAtRoute("GetTicket", new { id = ticketItem.Id }, ticketItem);
+            return CreatedAtRoute("GetTicket", new { id = ticketDTO.Id }, ticketDTO);
         }
 
         // PUT api/tickets/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]TicketItem ticketItem)
+        public IActionResult Put(int id, [FromBody]TicketDTO ticketDTO)
         {
-            var ticketDTO = mapper.Map<TicketDTO>(ticketItem);
             ticketDTO.Id = id;
 
             try

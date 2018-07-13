@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using BusinessLogicLayer.Interfaces;
+﻿using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTO;
-using WebAppAirlineDispatcher.Modules;
 using Shared.Exceptions;
 
 namespace WebAppAirlineDispatcher.Controllers
@@ -15,8 +9,6 @@ namespace WebAppAirlineDispatcher.Controllers
     public class StewardessesController : Controller
     {
         IStewardessService stewardessService;
-        IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<StewardessItem, StewardessDTO>()).CreateMapper();
-
 
         public StewardessesController(IStewardessService serv)
         {
@@ -47,12 +39,10 @@ namespace WebAppAirlineDispatcher.Controllers
 
         // POST api/stewardesses
         [HttpPost]
-        public IActionResult Post([FromBody]StewardessItem stewardessItem)
+        public IActionResult Post([FromBody]StewardessDTO stewardessDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
-            var stewardessDTO = mapper.Map<StewardessDTO>(stewardessItem);
 
             try
             {
@@ -63,14 +53,13 @@ namespace WebAppAirlineDispatcher.Controllers
                 return BadRequest(new { Exception = e.Message });
             }
 
-            return CreatedAtRoute("GetStewardess", new { id = stewardessItem.Id }, stewardessItem);
+            return CreatedAtRoute("GetStewardess", new { id = stewardessDTO.Id }, stewardessDTO);
         }
 
         // PUT api/stewardesses/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]StewardessItem stewardessItem)
+        public IActionResult Put(int id, [FromBody]StewardessDTO stewardessDTO)
         {
-            var stewardessDTO = mapper.Map<StewardessDTO>(stewardessItem);
             stewardessDTO.Id = id;
 
             try

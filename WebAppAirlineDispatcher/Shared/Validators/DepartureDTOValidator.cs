@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using WebAppAirlineDispatcher.Modules;
+using Shared.DTO;
 
-namespace WebAppAirlineDispatcher.Validators
+namespace Shared.Validators
 {
-    public class DepartureItemValidator : AbstractValidator<DepartureItem>
+    public class DepartureDTOValidator : AbstractValidator<DepartureDTO>
     {
-        public DepartureItemValidator()
+        public DepartureDTOValidator()
         {
             RuleFor(d => d.Id).NotEmpty().WithMessage("Departure id can't be empty !").GreaterThan(0);
             RuleFor(d => d.Time).NotEmpty().WithMessage("Time can't be empty !");

@@ -8,6 +8,7 @@ using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Services;
 using DataAccessLayer.Implementation.UnitOfWork;
 using FluentValidation.AspNetCore;
+using Shared.Validators;
 
 namespace WebAppAirlineDispatcher
 {
@@ -23,7 +24,7 @@ namespace WebAppAirlineDispatcher
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+            services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<FlightDTOValidator>());
             services.AddTransient<IFlightService, FlightService>();
             services.AddTransient<ITicketService, TicketService>();
             services.AddTransient<IStewardessService, StewardessService>();

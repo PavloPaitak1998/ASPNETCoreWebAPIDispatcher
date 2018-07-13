@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Shared.Exceptions;
-using AutoMapper;
+﻿using Shared.Exceptions;
 using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTO;
-using WebAppAirlineDispatcher.Modules;
 
 namespace WebAppAirlineDispatcher.Controllers
 {
@@ -15,8 +9,6 @@ namespace WebAppAirlineDispatcher.Controllers
     public class PilotsController : Controller
     {
         IPilotService pilotService;
-        IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<PilotItem, PilotDTO>()).CreateMapper();
-
 
         public PilotsController(IPilotService serv)
         {
@@ -46,12 +38,10 @@ namespace WebAppAirlineDispatcher.Controllers
 
         // POST api/pilots
         [HttpPost]
-        public IActionResult Post([FromBody]PilotItem pilotItem)
+        public IActionResult Post([FromBody]PilotDTO pilotDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
-            var pilotDTO = mapper.Map<PilotDTO>(pilotItem);
 
             try
             {
@@ -62,14 +52,13 @@ namespace WebAppAirlineDispatcher.Controllers
                 return BadRequest(new { Exception = e.Message });
             }
 
-            return CreatedAtRoute("GetFlight", new { id = pilotItem.Id }, pilotItem);
+            return CreatedAtRoute("GetFlight", new { id = pilotDTO.Id }, pilotDTO);
         }
 
         // PUT api/pilots/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]PilotItem pilotItem)
+        public IActionResult Put(int id, [FromBody]PilotDTO pilotDTO)
         {
-            var pilotDTO = mapper.Map<PilotDTO>(pilotItem);
             pilotDTO.Id = id;
 
             try

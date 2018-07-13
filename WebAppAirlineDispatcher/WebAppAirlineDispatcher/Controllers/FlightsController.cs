@@ -1,9 +1,7 @@
-﻿using AutoMapper;
-using BusinessLogicLayer.Interfaces;
+﻿using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTO;
 using Shared.Exceptions;
-using WebAppAirlineDispatcher.Modules;
 
 namespace WebAppAirlineDispatcher.Controllers
 {
@@ -11,8 +9,6 @@ namespace WebAppAirlineDispatcher.Controllers
     public class FlightsController : Controller
     {
         IFlightService flightService;
-        IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<FlightItem, FlightDTO>()).CreateMapper();
-
 
         public FlightsController(IFlightService serv)
         {
@@ -43,12 +39,10 @@ namespace WebAppAirlineDispatcher.Controllers
 
         // POST api/flights
         [HttpPost]
-        public IActionResult Post([FromBody]FlightItem flightItem)
+        public IActionResult Post([FromBody]FlightDTO flightDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
-            var flightDTO = mapper.Map<FlightDTO>(flightItem);
 
             try
             {
@@ -59,14 +53,13 @@ namespace WebAppAirlineDispatcher.Controllers
                 return BadRequest(new { Exception = e.Message });
             }
 
-            return CreatedAtRoute("GetFlight", new { id = flightItem.Number }, flightItem);
+            return CreatedAtRoute("GetFlight", new { id = flightDTO.Number }, flightDTO);
         }
 
         // PUT api/flights/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]FlightItem flightItem)
+        public IActionResult Put(int id, [FromBody]FlightDTO flightDTO)
         {
-            var flightDTO = mapper.Map<FlightDTO>(flightItem);
             flightDTO.Number = id;
 
             try

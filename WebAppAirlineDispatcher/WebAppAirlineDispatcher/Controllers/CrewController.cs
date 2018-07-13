@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using BusinessLogicLayer.Interfaces;
+﻿using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTO;
-using WebAppAirlineDispatcher.Modules;
 using Shared.Exceptions;
 
 namespace WebAppAirlineDispatcher.Controllers
@@ -11,8 +9,6 @@ namespace WebAppAirlineDispatcher.Controllers
     public class CrewController : Controller
     {
         ICrewService crewService;
-        IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<FlightItem, FlightDTO>()).CreateMapper();
-
 
         public CrewController(ICrewService serv)
         {
@@ -43,12 +39,10 @@ namespace WebAppAirlineDispatcher.Controllers
 
         // POST api/crew
         [HttpPost]
-        public IActionResult Post([FromBody]CrewItem crewItem)
+        public IActionResult Post([FromBody]CrewDTO crewDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
-            var crewDTO = mapper.Map<CrewDTO>(crewItem);
 
             try
             {
@@ -59,14 +53,13 @@ namespace WebAppAirlineDispatcher.Controllers
                 return BadRequest(new { Exception = e.Message });
             }
 
-            return CreatedAtRoute("GetCrew", new { id = crewItem.Id }, crewItem);
+            return CreatedAtRoute("GetCrew", new { id = crewDTO.Id }, crewDTO);
         }
 
         // PUT api/crew/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]CrewItem crewItem)
+        public IActionResult Put(int id, [FromBody]CrewDTO crewDTO)
         {
-            var crewDTO = mapper.Map<CrewDTO>(crewItem);
             crewDTO.Id = id;
 
             try

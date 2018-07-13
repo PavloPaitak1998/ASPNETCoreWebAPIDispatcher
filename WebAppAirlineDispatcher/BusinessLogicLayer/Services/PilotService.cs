@@ -55,7 +55,7 @@ namespace BusinessLogicLayer.Services
                 FirstName= pilotDTO.FirstName,
                 LastName=pilotDTO.LastName,
                 BirthDate=pilotDTO.BirthDate,
-                Experience=pilotDTO.Experience
+                Experience=pilotDTO.Experience.Value
             };
 
             unitOfWork.Pilots.Create(pilot);
@@ -74,7 +74,7 @@ namespace BusinessLogicLayer.Services
                 FirstName = pilotDTO.FirstName,
                 LastName = pilotDTO.LastName,
                 BirthDate = pilotDTO.BirthDate,
-                Experience = pilotDTO.Experience
+                Experience = pilotDTO.Experience.Value
             });
         }
 

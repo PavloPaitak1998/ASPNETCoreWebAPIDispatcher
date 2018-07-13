@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using BusinessLogicLayer.Interfaces;
+﻿using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTO;
-using WebAppAirlineDispatcher.Modules;
 using Shared.Exceptions;
 
 namespace WebAppAirlineDispatcher.Controllers
@@ -11,7 +9,6 @@ namespace WebAppAirlineDispatcher.Controllers
     public class PlaneTypesController : Controller
     {
         IPlaneTypeService planeTypeService;
-        IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<PlaneTypeItem, PlaneTypeDTO>()).CreateMapper();
 
         public PlaneTypesController(IPlaneTypeService serv)
         {
@@ -42,12 +39,10 @@ namespace WebAppAirlineDispatcher.Controllers
 
         // POST api/planetypes
         [HttpPost]
-        public IActionResult Post([FromBody]PlaneTypeItem planeTypeItem)
+        public IActionResult Post([FromBody]PlaneTypeDTO planeTypeDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
-            var planeTypeDTO = mapper.Map<PlaneTypeDTO>(planeTypeItem);
 
             try
             {
@@ -58,14 +53,13 @@ namespace WebAppAirlineDispatcher.Controllers
                 return BadRequest(new { Exception = e.Message });
             }
 
-            return CreatedAtRoute("GetPlaneType", new { id = planeTypeItem.Id }, planeTypeItem);
+            return CreatedAtRoute("GetPlaneType", new { id = planeTypeDTO.Id }, planeTypeDTO);
         }
 
         // PUT api/planetypes/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]PlaneTypeItem planeTypeItem)
+        public IActionResult Put(int id, [FromBody]PlaneTypeDTO planeTypeDTO)
         {
-            var planeTypeDTO = mapper.Map<PlaneTypeDTO>(planeTypeItem);
             planeTypeDTO.Id = id;
 
             try

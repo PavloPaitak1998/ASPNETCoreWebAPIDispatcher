@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using BusinessLogicLayer.Interfaces;
+﻿using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTO;
-using WebAppAirlineDispatcher.Modules;
 using Shared.Exceptions;
 
 namespace WebAppAirlineDispatcher.Controllers
@@ -15,7 +9,6 @@ namespace WebAppAirlineDispatcher.Controllers
     public class DeparturesController : Controller
     {
         IDepartureService departureService;
-        IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<DepartureItem, DepartureDTO>()).CreateMapper();
 
 
         public DeparturesController(IDepartureService serv)
@@ -46,12 +39,10 @@ namespace WebAppAirlineDispatcher.Controllers
 
         // POST api/departures
         [HttpPost]
-        public IActionResult Post([FromBody]DepartureItem departureItem)
+        public IActionResult Post([FromBody]DepartureDTO departureDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
-            var departureDTO = mapper.Map<DepartureDTO>(departureItem);
 
             try
             {
@@ -62,14 +53,13 @@ namespace WebAppAirlineDispatcher.Controllers
                 return BadRequest(new { Exception = e.Message });
             }
 
-            return CreatedAtRoute("GetDeparture", new { id = departureItem.Id }, departureItem);
+            return CreatedAtRoute("GetDeparture", new { id = departureDTO.Id }, departureDTO);
         }
 
         // PUT api/departures/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]DepartureItem departureItem)
+        public IActionResult Put(int id, [FromBody]DepartureDTO departureDTO)
         {
-            var departureDTO = mapper.Map<DepartureDTO>(departureItem);
             departureDTO.Id = id;
 
             try

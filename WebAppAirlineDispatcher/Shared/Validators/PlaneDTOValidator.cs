@@ -1,17 +1,18 @@
 ﻿using FluentValidation;
-using WebAppAirlineDispatcher.Modules;
+using Shared.DTO;
 
-namespace WebAppAirlineDispatcher.Validators
+namespace Shared.Validators
 {
-    public class PlaneItemValidator : AbstractValidator<PlaneItem>
+    public class PlaneDTOValidator : AbstractValidator<PlaneDTO>
     {
-        public PlaneItemValidator()
+        public PlaneDTOValidator()
         {
             RuleFor(p => p.Id).NotEmpty().WithMessage("Flight Id can't be empty !").GreaterThan(0);
             RuleFor(p => p.Name).NotNull().WithMessage("Name can't be null !");
             RuleFor(p => p.TypeId).NotEmpty().WithMessage("Type Id  can't be empty !").GreaterThan(0);
             RuleFor(p => p.ReleaseDate).NotEmpty().WithMessage("Release Date can't be empty !");
             RuleFor(p => p.Lifetime).NotEmpty().WithMessage("Lifetime can't be empty !");
+
         }
     }
 }

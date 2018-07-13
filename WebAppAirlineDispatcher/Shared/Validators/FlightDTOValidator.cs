@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using WebAppAirlineDispatcher.Modules;
+using Shared.DTO;
 
-namespace WebAppAirlineDispatcher.Validators
+namespace Shared.Validators
 {
-    public class FlightItemValidator : AbstractValidator<FlightItem>
+    public class FlightDTOValidator : AbstractValidator<FlightDTO>
     {
-        public FlightItemValidator()
+        public FlightDTOValidator()
         {
             RuleFor(f => f.Number).NotEmpty().WithMessage("Flight number can't be empty !").GreaterThan(0);
             RuleFor(f => f.PointOfDeparture).NotNull().WithMessage("Point of departure can't be null !");
@@ -13,7 +13,7 @@ namespace WebAppAirlineDispatcher.Validators
             RuleFor(f => f.Destination).NotNull().WithMessage("Destination can't be empty !");
             RuleFor(f => f.DestinationTime).NotEmpty().WithMessage("Destination time can't be null !");
             RuleFor(f => f.TicketsId).NotEmpty().WithMessage("Tickets Id can't be empty !");
+
         }
     }
 }
-
