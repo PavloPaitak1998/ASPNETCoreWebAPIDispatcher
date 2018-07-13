@@ -5,11 +5,8 @@ namespace DataAccessLayer.Implementation.Repositories
 {
     public class PlaneTypeRepository : Repository<PlaneType>
     {
-        new IDataSource dataSource;
-
         public PlaneTypeRepository(IDataSource data):base(data)
         {
-            dataSource = data;
         }
 
         public override PlaneType Get(int id)

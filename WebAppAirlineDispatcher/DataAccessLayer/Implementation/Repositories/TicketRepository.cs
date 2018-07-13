@@ -5,11 +5,8 @@ namespace DataAccessLayer.Implementation.Repositories
 {
     public class TicketRepository : Repository<Ticket>
     {
-        new IDataSource dataSource;
-
         public TicketRepository(IDataSource data):base(data)
         {
-            dataSource = data;
         }
 
         public override Ticket Get(int id)

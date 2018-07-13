@@ -6,11 +6,8 @@ namespace DataAccessLayer.Implementation.Repositories
 {
     public class DepartureRepository : Repository<Departure>
     {
-        new IDataSource dataSource;
-
         public DepartureRepository(IDataSource data):base(data)
         {
-            dataSource = data;
         }
 
         public override Departure Get(int id)

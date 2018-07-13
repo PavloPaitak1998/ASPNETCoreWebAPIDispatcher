@@ -6,11 +6,8 @@ namespace DataAccessLayer.Implementation.Repositories
 {
     public class PilotRepository : Repository<Pilot>
     {
-        new IDataSource dataSource;
-
         public PilotRepository(IDataSource data):base(data)
         {
-            dataSource = data;
         }
         public override Pilot Get(int id)
         {

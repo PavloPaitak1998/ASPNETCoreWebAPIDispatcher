@@ -5,11 +5,8 @@ namespace DataAccessLayer.Implementation.Repositories
 {
     public class CrewRepository : Repository<Crew>
     {
-        new IDataSource dataSource;
-
         public CrewRepository(IDataSource data):base(data)
         {
-            dataSource = data;
         }
 
         public override Crew Get(int id)

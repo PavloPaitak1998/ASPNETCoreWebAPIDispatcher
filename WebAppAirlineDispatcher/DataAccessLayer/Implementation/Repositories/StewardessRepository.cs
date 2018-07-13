@@ -6,11 +6,8 @@ namespace DataAccessLayer.Implementation.Repositories
 {
     public class StewardessRepository : Repository<Stewardess>
     {
-        new IDataSource dataSource;
-
         public StewardessRepository(IDataSource data):base(data)
         {
-            dataSource = data;
         }
 
         public override Stewardess Get(int id)

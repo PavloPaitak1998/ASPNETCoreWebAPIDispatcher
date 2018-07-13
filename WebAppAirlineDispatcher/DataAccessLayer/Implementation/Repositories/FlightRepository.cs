@@ -7,11 +7,8 @@ namespace DataAccessLayer.Implementation.Repositories
 {
     public class FlightRepository : Repository<Flight>
     {
-        new IDataSource dataSource;
-
         public FlightRepository(IDataSource data):base(data)
         {
-            dataSource = data;
         }
 
         public override Flight Get(int number)
