@@ -43,3 +43,7 @@ We as dispatchers must have CRUD operations on all entities.
 
 #### Have fun)
 
+
+ _"Motivation is good, but not the answer to keep you going in the long run. Become passionate about what you do."_
+
+– Yad Faeq 
