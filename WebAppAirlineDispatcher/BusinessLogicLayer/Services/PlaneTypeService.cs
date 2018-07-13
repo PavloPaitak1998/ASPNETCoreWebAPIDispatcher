@@ -89,7 +89,7 @@ namespace BusinessLogicLayer.Services
             if (planeType == null)
                 throw new ValidationException($"Plane Type with this id {id} not found");
 
-            unitOfWork.PlaneTypes.Delete(id);
+            unitOfWork.PlaneTypes.Delete(planeType);
 
             foreach (var plane in unitOfWork.Planes.Find(p => p.TypeId == id))
             {

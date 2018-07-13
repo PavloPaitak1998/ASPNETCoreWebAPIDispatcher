@@ -13,5 +13,8 @@ namespace DataAccessLayer.Interfaces
         List<Crew> CrewList { get; set; }
         List<Plane> PlaneList { get; set; }
         List<PlaneType> PlaneTypeList { get; set; }
+
+        object GetData<TEntity>() where TEntity : class;
+
     }
 }

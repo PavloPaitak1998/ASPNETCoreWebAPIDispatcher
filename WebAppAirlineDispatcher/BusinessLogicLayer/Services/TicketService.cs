@@ -106,7 +106,7 @@ namespace BusinessLogicLayer.Services
             if (ticket == null)
                 throw new ValidationException($"Ticket with this id {id} not found");
 
-            unitOfWork.Tickets.Delete(id);
+            unitOfWork.Tickets.Delete(ticket);
 
             foreach (var flight in unitOfWork.Flights.Find(f => f.TicketsId.Exists(t => t == id)))
             {

@@ -96,7 +96,7 @@ namespace BusinessLogicLayer.Services
             if (pilot == null)
                 throw new ValidationException($"Pilot with this id {id} not found");
 
-            unitOfWork.Pilots.Delete(id);
+            unitOfWork.Pilots.Delete(pilot);
 
             foreach (var crew in unitOfWork.Crew.Find(c => c.PilotId == id))
             {

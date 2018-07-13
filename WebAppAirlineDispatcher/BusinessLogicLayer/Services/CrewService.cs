@@ -118,7 +118,7 @@ namespace BusinessLogicLayer.Services
             if (crew == null)
                 throw new ValidationException($"Crew with this id {id} not found");
 
-            unitOfWork.Crew.Delete(id);
+            unitOfWork.Crew.Delete(crew);
         }
     }
 }

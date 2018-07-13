@@ -1,40 +1,23 @@
 ﻿using DataAccessLayer.Interfaces;
 using DataAccessLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace DataAccessLayer.Implementation.Repositories
 {
-    public class TicketRepository : IRepository<Ticket>
+    public class TicketRepository : Repository<Ticket>
     {
-        IDataSource dataSource;
+        new IDataSource dataSource;
 
-        public TicketRepository(IDataSource data)
+        public TicketRepository(IDataSource data):base(data)
         {
             dataSource = data;
         }
-        public Ticket Get(int id)
+
+        public override Ticket Get(int id)
         {
             return dataSource.TicketList.Find(t => t.Id == id);
         }
 
-        public IEnumerable<Ticket> GetAll()
-        {
-            return dataSource.TicketList;
-        }
-
-        public void Create(Ticket entity)
-        {
-            dataSource.TicketList.Add(entity);
-        }
-
-        public IEnumerable<Ticket> Find(Func<Ticket, bool> predicate)
-        {
-            return dataSource.TicketList.Where(predicate);
-        }
-
-        public void Update(Ticket entity)
+        public override void Update(Ticket entity)
         {
             var ticket = dataSource.TicketList.Find(t => t.Id == entity.Id);
 
@@ -43,20 +26,6 @@ namespace DataAccessLayer.Implementation.Repositories
             if (entity.Price != 0.0)
                 ticket.Price = entity.Price;
 
-        }
-
-        public void Delete(int id)
-        {
-            var tickets = dataSource.TicketList;
-
-            tickets.Remove(tickets.Find(t => t.Id == id));
-        }
-
-        public void DeleteAll()
-        {
-            var tickets = dataSource.TicketList;
-
-            tickets.RemoveRange(0, tickets.Count());
         }
     }
 }

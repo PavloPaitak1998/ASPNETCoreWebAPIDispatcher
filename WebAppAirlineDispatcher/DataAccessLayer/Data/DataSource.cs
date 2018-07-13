@@ -16,7 +16,31 @@ namespace DataAccessLayer.Data
         public List<Plane> PlaneList { get; set; } = GetPlanes();
         public List<PlaneType> PlaneTypeList { get; set; } = GetPlaneTypes();
 
-
+        public object GetData<TEntity>() where TEntity : class
+        {
+            switch (typeof(TEntity).Name)
+            {
+                case "Flight":
+                    return FlightList;
+                case "Ticket":
+                    return TicketList;
+                case "Departure":
+                    return DepartureList;
+                case "Stewardess":
+                    return StewardessList;
+                case "Pilot":
+                    return PilotList;
+                case "Crew":
+                    return CrewList;
+                case "Plane":
+                    return PlaneList;
+                case "PlaneType":
+                    return PlaneTypeList;
+                default:
+                    break;
+            }
+            throw new Exception($"Uncorrect TEntity type. There isn't any {typeof(TEntity).Name} type");
+        }
 
         //Data
         static List<Flight> GetFlights()

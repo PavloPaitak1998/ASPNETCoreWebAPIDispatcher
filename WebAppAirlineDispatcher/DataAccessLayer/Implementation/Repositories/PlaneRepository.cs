@@ -1,41 +1,24 @@
 ﻿using DataAccessLayer.Interfaces;
 using DataAccessLayer.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace DataAccessLayer.Implementation.Repositories
 {
-    public class PlaneRepository : IRepository<Plane>
+    public class PlaneRepository : Repository<Plane>
     {
-        IDataSource dataSource;
+        new IDataSource dataSource;
 
-        public PlaneRepository(IDataSource data)
+        public PlaneRepository(IDataSource data):base(data)
         {
             dataSource = data;
         }
 
-        public Plane Get(int id)
+        public override Plane Get(int id)
         {
             return dataSource.PlaneList.Find(p => p.Id == id);
         }
 
-        public IEnumerable<Plane> GetAll()
-        {
-            return dataSource.PlaneList;
-        }
-
-        public void Create(Plane entity)
-        {
-            dataSource.PlaneList.Add(entity);
-        }
-
-        public IEnumerable<Plane> Find(Func<Plane, bool> predicate)
-        {
-            return dataSource.PlaneList.Where(predicate);
-        }
-
-        public void Update(Plane entity)
+        public override void Update(Plane entity)
         {
             var plane = dataSource.PlaneList.Find(p => p.Id == entity.Id);
 
@@ -47,20 +30,6 @@ namespace DataAccessLayer.Implementation.Repositories
                 plane.ReleaseDate = entity.ReleaseDate;
             if (entity.Lifetime != TimeSpan.MinValue)
                 plane.Lifetime = entity.Lifetime;
-        }
-
-        public void Delete(int id)
-        {
-            var planes = dataSource.PlaneList;
-
-            planes.Remove(planes.Find(p => p.Id == id));
-        }
-
-        public void DeleteAll()
-        {
-            var planes = dataSource.PlaneList;
-
-            planes.RemoveRange(0, planes.Count());
         }
     }
 }

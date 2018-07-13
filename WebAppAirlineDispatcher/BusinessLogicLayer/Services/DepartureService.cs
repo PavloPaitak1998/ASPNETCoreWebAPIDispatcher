@@ -123,7 +123,7 @@ namespace BusinessLogicLayer.Services
             if (departure == null)
                 throw new ValidationException($"Departure with this id {id} not found");
 
-            unitOfWork.Departures.Delete(id);
+            unitOfWork.Departures.Delete(departure);
         }
     }
 }

@@ -1,41 +1,25 @@
 ﻿using DataAccessLayer.Interfaces;
 using DataAccessLayer.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace DataAccessLayer.Implementation.Repositories
 {
-    public class FlightRepository : IRepository<Flight>
+    public class FlightRepository : Repository<Flight>
     {
-        IDataSource dataSource;
+        new IDataSource dataSource;
 
-        public FlightRepository(IDataSource data)
+        public FlightRepository(IDataSource data):base(data)
         {
             dataSource = data;
         }
 
-        public Flight Get(int number)
+        public override Flight Get(int number)
         {
             return dataSource.FlightList.Find(f => f.Number == number);
         }
 
-        public IEnumerable<Flight> GetAll()
-        {
-            return dataSource.FlightList;
-        }
-
-        public void Create(Flight entity)
-        {
-            dataSource.FlightList.Add(entity);
-        }
-
-        public IEnumerable<Flight> Find(Func<Flight, bool> predicate)
-        {
-            return dataSource.FlightList.Where(predicate);
-        }
-
-        public void Update(Flight entity)
+        public override void Update(Flight entity)
         {
             var flight = dataSource.FlightList.Find(f => f.Number == entity.Number);
 
@@ -51,18 +35,5 @@ namespace DataAccessLayer.Implementation.Repositories
                 flight.TicketsId = entity.TicketsId;
         }
 
-        public void Delete(int number)
-        {
-            var flights = dataSource.FlightList;
-
-            flights.Remove(flights.Find(f=>f.Number==number));
-        }
-
-        public void DeleteAll()
-        {
-            var flights = dataSource.FlightList;
-
-            flights.RemoveRange(0, flights.Count());
-        }
     }
 }

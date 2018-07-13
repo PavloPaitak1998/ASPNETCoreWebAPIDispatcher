@@ -10,7 +10,7 @@ namespace DataAccessLayer.Interfaces
         IEnumerable<TEntity> Find(Func<TEntity, Boolean> predicate);
         void Create(TEntity entity);
         void Update(TEntity entity);
-        void Delete(int id);
+        void Delete(TEntity entity);
         void DeleteAll();
 
     }

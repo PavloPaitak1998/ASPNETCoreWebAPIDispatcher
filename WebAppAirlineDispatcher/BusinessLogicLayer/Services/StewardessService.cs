@@ -93,7 +93,7 @@ namespace BusinessLogicLayer.Services
             if (stewardess == null)
                 throw new ValidationException($"Stewardess with this id {id} not found");
 
-            unitOfWork.Stewardesses.Delete(id);
+            unitOfWork.Stewardesses.Delete(stewardess);
 
             foreach (var crew in unitOfWork.Crew.Find(c => c.StewardessesId.Exists(s => s == id)))
             {

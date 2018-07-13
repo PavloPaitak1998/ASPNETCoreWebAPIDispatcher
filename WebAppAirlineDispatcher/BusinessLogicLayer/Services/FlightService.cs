@@ -129,7 +129,7 @@ namespace BusinessLogicLayer.Services
             if (flight == null)
                 throw new ValidationException($"Flight with this number {id} not found");
 
-            unitOfWork.Flights.Delete(id);
+            unitOfWork.Flights.Delete(flight);
 
             foreach (var departure in unitOfWork.Departures.Find(d => d.FlightNumber == id))
             {
